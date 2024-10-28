@@ -7,7 +7,7 @@ public class GameDataController : SingletonMono<GameDataController>
     private const string DATA_KEY = "GAME_DATA";
     public GameData GameData => _gameData;
 
-    public void Init()
+    public void Start()
     {
         if (PlayerPrefs.HasKey(DATA_KEY))
         {

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 251836b250274659a3531bd089999b93, type: 3}
   m_Name: SquidConfigSO
   m_EditorClassIdentifier: 
-  MaxMoveIndex: 3
-  MoveDistance: 2
+  MaxMoveIndex: 2
+  MoveDistance: 4
   MoveDuration: 0.25
   ShootCooldown: 0.2

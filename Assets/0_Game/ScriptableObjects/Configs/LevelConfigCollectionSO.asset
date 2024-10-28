@@ -22,3 +22,5 @@ MonoBehaviour:
     Targets:
     - Color: 4
       Targets: 5
+    EnemyWaves:
+    - {fileID: 11400000, guid: 7626f529f099820418c5e9f0ee6f3294, type: 2}

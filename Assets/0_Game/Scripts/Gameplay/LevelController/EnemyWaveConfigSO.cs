@@ -11,6 +11,9 @@ public class EnemyWaveConfigSO : ScriptableObject
 [Serializable]
 public class EnemyBehaviourConfig
 {
+    /// <summary>
+    /// Matrix position.
+    /// </summary>
     public Vector2 TargetPosition;
     public EDirection MoveInDirection;
     public float MoveDuration;

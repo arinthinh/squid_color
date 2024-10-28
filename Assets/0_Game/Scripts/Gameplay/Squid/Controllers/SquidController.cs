@@ -12,17 +12,12 @@ public abstract class SquidController : MonoBehaviour
         _config = config;
     }
 
-    public virtual void Init()
+    public virtual void OnStartPlay()
     {
         
     }
 
-    public virtual void Enable()
-    {
-        
-    }
-
-    public virtual void Disable()
+    public virtual void OnStopPlay()
     {
         
     }

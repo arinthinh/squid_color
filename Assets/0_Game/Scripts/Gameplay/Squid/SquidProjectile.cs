@@ -17,4 +17,12 @@ public class SquidProjectile : Projectile
         transform.position = startPosition;
         _colorRenderer.color = _colorDefine.GetColor(color).Color;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Disappear();
+        }
+    }
 }

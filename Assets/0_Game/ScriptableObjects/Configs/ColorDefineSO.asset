@@ -19,3 +19,15 @@ MonoBehaviour:
   - Key: 2
     RGB: 
     Color: {r: 0.6650944, g: 0.8424451, b: 1, a: 1}
+  - Key: 1
+    RGB: 
+    Color: {r: 1, g: 0, b: 0, a: 1}
+  - Key: 3
+    RGB: 
+    Color: {r: 1, g: 0.79205453, b: 0, a: 1}
+  - Key: 4
+    RGB: 
+    Color: {r: 0.8862323, g: 0.25943398, b: 1, a: 1}
+  - Key: 5
+    RGB: 
+    Color: {r: 0.036716342, g: 1, b: 0, a: 1}

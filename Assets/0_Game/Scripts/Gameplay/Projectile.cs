@@ -5,12 +5,12 @@ using UnityEngine.Pool;
 public class Projectile : MonoBehaviour
 {
     protected IObjectPool<Projectile> _pool;
-    
+
     public void SetPool(IObjectPool<Projectile> pool)
     {
         _pool = pool;
     }
-    
+
     public void Fly(Vector3 flyTarget, float flyDuration)
     {
         transform.DOMove(flyTarget, flyDuration)
@@ -21,8 +21,6 @@ public class Projectile : MonoBehaviour
     public void Disappear()
     {
         transform.DOKill();
-        _pool.Release(this);
+        if (gameObject.activeSelf) _pool.Release(this);
     }
-
 }
- 

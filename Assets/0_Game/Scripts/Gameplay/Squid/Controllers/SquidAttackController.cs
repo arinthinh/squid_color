@@ -24,7 +24,7 @@ public class SquidAttackController : SquidController
     private void OnEnable() => _shootAction.action.started += OnShootActionPerformed;
     private void OnDisable() => _shootAction.action.started -= OnShootActionPerformed;
 
-    public override void Init()
+    public override void OnStartPlay()
     {
         _projectilePool = new ObjectPool<Projectile>(
             () =>

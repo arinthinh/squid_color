@@ -27,6 +27,18 @@ public class SquidMoveController : SquidController
         _moveRightAction.action.started -= OnInputMoveRight;
     }
 
+    public override void OnStartPlay()
+    {
+        _moveLeftAction.action.Enable();
+        _moveRightAction.action.Enable();
+    }
+
+    public override void OnStopPlay()
+    {
+        _moveLeftAction.action.Disable();
+        _moveRightAction.action.Disable();
+    }
+
     public void Move(MoveDirection direction)
     {
         var nextPosition = _data.Position + (direction == MoveDirection.Left ? -1 : 1);

@@ -6,7 +6,6 @@ public class GameplayController : SingletonMono<GameplayController>
 {
     [SerializeField] private LevelController _levelController;
 
-    private LevelController _currentLevelController;
     private int _currentLevelIndex;
     private EState _currentState;
     
@@ -77,7 +76,7 @@ public class GameplayController : SingletonMono<GameplayController>
     {
         _levelController.gameObject.SetActive(true);
         var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
-        _currentLevelController.StartLevel(levelIndex, inGameUIView);
+        _levelController.StartLevel(levelIndex, inGameUIView);
     }
 
     public enum EState

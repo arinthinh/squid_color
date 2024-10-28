@@ -7,7 +7,10 @@ using UnityEngine.Pool;
 
 public class EnemyManager : MonoBehaviour, IProjectileManager
 {
-    public event Action<EColor> EnemyDie;
+    /// <summary>
+    /// (EColor color, Vector3 position)
+    /// </summary>
+    public event Action<EColor, Vector3> EnemyDie;
 
     [SerializeField] private EnemyController _enemyPrefab;
     [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
@@ -18,8 +21,20 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
 
     private ObjectPool<EnemyController> _enemyPool;
     private ObjectPool<Projectile> _projectilePool;
-    private List<Projectile> _projectiles = new();
+
+    private List<EnemyProjectile> _projectileSpawned = new();
+
     private Tween _spawningPatternTween;
+
+    private void OnEnable()
+    {
+        EnemyController.Die += OnEnemyDie;
+    }
+
+    private void OnDisable()
+    {
+        EnemyController.Die -= OnEnemyDie;
+    }
 
     private void Start()
     {
@@ -50,6 +65,12 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
     {
         _enemyColors = enemyColors;
         _waves = waves;
+        StartSpawningLoop();
+    }
+
+    public void OnStopPlay()
+    {
+        StopAllActions();
     }
 
     private void StartSpawningLoop()
@@ -77,34 +98,32 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
     private void SpawnEnemy(EColor color, EnemyBehaviourConfig enemyBehaviour)
     {
         var enemy = _enemyPool.Get();
-        // enemy.OnSpawn();
         enemy.OnSpawn(color, enemyBehaviour, _positionConfig);
     }
 
-    private void OnEnemyDie(EColor color)
+    private void OnEnemyDie(EnemyController enemy)
     {
-        EnemyDie?.Invoke(color);
+        EnemyDie?.Invoke(enemy.Color, enemy.transform.position);
     }
 
     public EnemyProjectile GetProjectile()
     {
-        var projectile = _projectilePool.Get();
-        _projectiles.Add(projectile);
-        return projectile as EnemyProjectile;
+        var projectile = _projectilePool.Get() as EnemyProjectile;
+        _projectileSpawned.Add(projectile);
+        return projectile;
     }
 
     public void ReturnProjectile(EnemyProjectile projectile)
     {
-        _projectiles.Remove(projectile);
+        _projectileSpawned.Remove(projectile);
         _projectilePool.Release(projectile);
     }
 
     private void ReleaseAllProjectiles()
     {
-        foreach (var projectile in _projectiles)
+        foreach (var projectile in _projectileSpawned)
         {
-            if (!projectile.isActiveAndEnabled) return;
-            _projectilePool.Release(projectile);
+            if (projectile.gameObject.activeSelf) _projectilePool.Release(projectile);
         }
     }
 }

@@ -22,7 +22,7 @@ public class SquidAnimator : SquidController
                 _rotateTransform.DOKill();
                 _rotateTransform.localEulerAngles = Vector3.zero;
                 var animDuration = _config.MoveDuration / 2f;
-                _rotateTransform.DORotate(new Vector3(0, 0, 20), animDuration)
+                _rotateTransform.DORotate(new Vector3(0, 0, _rotateValue), animDuration)
                     .OnComplete(() => _rotateTransform.DORotate(Vector3.zero, animDuration));
                 break;
             }
@@ -32,7 +32,7 @@ public class SquidAnimator : SquidController
                 _rotateTransform.DOKill();
                 _rotateTransform.localEulerAngles = Vector3.zero;
                 var animDuration = _config.MoveDuration / 2f;
-                _rotateTransform.DORotate(new Vector3(0, 0, -20), animDuration)
+                _rotateTransform.DORotate(new Vector3(0, 0, -_rotateValue), animDuration)
                     .OnComplete(() => _rotateTransform.DORotate(Vector3.zero, animDuration));
                 break;
             }

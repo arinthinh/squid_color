@@ -48,6 +48,8 @@ public class LevelController : MonoBehaviour
         _targetPresenter.LoadTargetInfo(_curLevelData.Targets);
 
         _squid.OnStartPlay(_config.SquidStartedInks);
+        
+        _enemyManager.OnStartPlay(_config.EmemyColors, _config.EnemyWaves);
     }
 
     private void CheckWin()
@@ -58,8 +60,15 @@ public class LevelController : MonoBehaviour
         }
     }
 
+    private void StopPlay()
+    {
+        _squid.OnStopPlay();
+        _enemyManager.OnStopPlay();
+    }
+
     private void OnWinLevel()
     {
+        StopPlay();
         // Save data
         GameDataController.Instance.OnWinLevel();
         // Display UI
@@ -79,11 +88,11 @@ public class LevelController : MonoBehaviour
         LoseLevel?.Invoke();
     }
 
-    private void OnEnemyDie(EColor color)
+    private void OnEnemyDie(EColor color, Vector3 position)
     {
         var targetData = _curLevelData.GetTarget(color);
         targetData.Target--;
-        _targetPresenter.OnTargetInfoChanged(targetData.Color, targetData.Target, Vector3.zero);
+        _targetPresenter.OnTargetInfoChanged(targetData.Color, targetData.Target, position);
         CheckWin();
     }
 }

@@ -12,25 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 826d23bde16546dba3cfbc9a61b04c6a, type: 3}
   m_Name: EnemyWaveConfig
   m_EditorClassIdentifier: 
-  PatternInterval: 11
-  SpawnConfigs:
+  Interval: 7
+  EnemyBehaviours:
   - TargetPosition: {x: 0, y: 0}
     MoveInDirection: 0
     MoveDuration: 1
-    StayInterval: 10
+    StayInterval: 5
+    IsAttack: 0
   - TargetPosition: {x: 1, y: 0}
     MoveInDirection: 0
     MoveDuration: 1
-    StayInterval: 10
+    StayInterval: 5
+    IsAttack: 0
   - TargetPosition: {x: 2, y: 0}
     MoveInDirection: 0
     MoveDuration: 1
-    StayInterval: 10
+    StayInterval: 5
+    IsAttack: 0
   - TargetPosition: {x: 3, y: 0}
     MoveInDirection: 0
     MoveDuration: 1
-    StayInterval: 10
+    StayInterval: 5
+    IsAttack: 0
   - TargetPosition: {x: 4, y: 0}
     MoveInDirection: 0
     MoveDuration: 1
-    StayInterval: 10
+    StayInterval: 5
+    IsAttack: 0
