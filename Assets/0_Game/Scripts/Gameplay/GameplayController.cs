@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameplayController : SingletonMono<GameplayController>
 {
-    [SerializeField] private LevelController _levelControllerPrefab;
+    [SerializeField] private LevelController _levelController;
 
     private LevelController _currentLevelController;
     private int _currentLevelIndex;
@@ -32,7 +32,7 @@ public class GameplayController : SingletonMono<GameplayController>
                 UIManager.Instance.GetView<LevelSelectUIView>().Hide();
                 break;
             case EState.InGame:
-                DestroyLevelController();
+                _levelController.gameObject.SetActive(false);
                 UIManager.Instance.GetView<InGameUIView>().Hide();
                 break;
         }
@@ -50,7 +50,7 @@ public class GameplayController : SingletonMono<GameplayController>
                 break;
             case EState.InGame:
                 UIManager.Instance.GetView<InGameUIView>().Show();
-                SpawnLevelController(_currentLevelIndex);
+                ActiveLevelController(_currentLevelIndex);
                 break;
         }
     }
@@ -73,18 +73,11 @@ public class GameplayController : SingletonMono<GameplayController>
         ChangeState(EState.LevelSelect);
     }
 
-    private void SpawnLevelController(int levelIndex)
+    private void ActiveLevelController(int levelIndex)
     {
-        _currentLevelController = Instantiate(_levelControllerPrefab, transform);
+        _levelController.gameObject.SetActive(true);
         var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
         _currentLevelController.StartLevel(levelIndex, inGameUIView);
-    }
-
-    private void DestroyLevelController()
-    {
-        if (_currentLevelController != null)
-            Destroy(_currentLevelController.gameObject);
-        _currentLevelController = null;
     }
 
     public enum EState

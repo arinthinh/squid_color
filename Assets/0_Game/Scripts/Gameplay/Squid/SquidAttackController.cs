@@ -15,7 +15,7 @@ public class SquidAttackController : SquidController
 
     [SerializeField] private SquidAnimator _animator;
 
-    private ObjectPool<SquidProjectile> _projectilePool;
+    private ObjectPool<Projectile> _projectilePool;
 
     private EColor _currentInkColor;
     private bool _isCooldown;
@@ -26,11 +26,11 @@ public class SquidAttackController : SquidController
 
     public override void Init()
     {
-        _projectilePool = new ObjectPool<SquidProjectile>(
+        _projectilePool = new ObjectPool<Projectile>(
             () =>
             {
                 var newProjectile = Instantiate(_projectilePrefab, _projectileSpawnPoint);
-                newProjectile.OnSpawn(_projectilePool);
+                newProjectile.SetPool(_projectilePool);
                 return newProjectile;
             },
             projectile => projectile.gameObject.SetActive(true),
@@ -40,7 +40,7 @@ public class SquidAttackController : SquidController
         LoadNewInk();
     }
 
-    public void Attack( )
+    public void Attack()
     {
         if (_data.IsOutOfInk)
         {
@@ -53,21 +53,24 @@ public class SquidAttackController : SquidController
         _animator.PlayAnimation(SquidAnimator.EAnimation.Shoot);
         ShootInkProjectile(_currentInkColor);
         StartCooldown(_config.ShootCooldown);
-        
+
         var inkLeft = _data.Inks[_currentInkColor]--;
         if (inkLeft == 0) LoadNewInk();
     }
 
-    private SquidProjectile ShootInkProjectile(EColor color)
+    private void ShootInkProjectile(EColor color)
     {
-        var projectile = _projectilePool.Get();
+        var projectile = _projectilePool.Get() as SquidProjectile;
+        if (projectile == null) return;
+
         var spawnPositionX = _data.Position * _config.MoveDistance;
         var spawnPosition = _projectileSpawnPoint.position.WithX(spawnPositionX);
+        var targetPosition = spawnPosition + Vector3.up * 25f;
 
         projectile.SetInfo(color, spawnPosition);
-        projectile.Fly();
-        return projectile;
+        projectile.Fly(targetPosition, 0.75f);
     }
+
 
     private void StartCooldown(float cooldownTime)
     {
@@ -79,6 +82,6 @@ public class SquidAttackController : SquidController
     {
         _currentInkColor = _data.GetValidInk();
     }
-    
+
     private void OnShootActionPerformed(InputAction.CallbackContext context) => Attack();
 }
