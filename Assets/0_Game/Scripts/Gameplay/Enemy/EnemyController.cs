@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class EnemyController : MonoBehaviour
 {
@@ -12,6 +13,19 @@ public class EnemyController : MonoBehaviour
     [Header("CONFIGS")]
     [SerializeField] private ColorMixFormulaConfigSO _colorMixFormula;
 
+    private IObjectPool<EnemyController> _pool;
+
+    public void OnSpawn(IObjectPool<EnemyController> pool, EColor color, EnemyBehaviourConfig behaviourConfig)
+    {
+        _pool = pool;
+        ChangeColor(color);
+        PerformBehaviour(behaviourConfig);
+    }
+
+    private void PerformBehaviour(EnemyBehaviourConfig behaviourConfig)
+    {
+        
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

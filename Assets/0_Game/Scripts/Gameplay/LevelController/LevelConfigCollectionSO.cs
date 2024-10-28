@@ -20,6 +20,7 @@ public class LevelConfig
     public List<EColor> EmemyColors;
     public List<SquidInkConfig> SquidStartedInks;
     public List<TargetConfig> Targets;
+    public List<EnemyWaveConfigSO> SpawnPatterns;
 
     [Serializable]
     public class TargetConfig
