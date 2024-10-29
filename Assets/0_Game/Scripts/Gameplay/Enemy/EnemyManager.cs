@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Redcode.Extensions;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class EnemyManager : MonoBehaviour, IProjectileManager
+public class EnemyManager : MonoBehaviour
 {
     /// <summary>
     /// (EColor color, Vector3 position)
@@ -22,9 +24,10 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
     private ObjectPool<EnemyController> _enemyPool;
     private ObjectPool<Projectile> _projectilePool;
 
-    private List<EnemyProjectile> _projectileSpawned = new();
+    private List<Projectile> _projectileSpawned = new();
 
-    private Tween _spawningPatternTween;
+    private bool _isPerforming;
+    private CancellationTokenSource _monstersBehaviourCTS;
 
     private void OnEnable()
     {
@@ -45,8 +48,16 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
                 newProjectile.SetPool(_projectilePool);
                 return newProjectile;
             },
-            projectile => projectile.gameObject.SetActive(true),
-            projectile => projectile.gameObject.SetActive(false),
+            projectile =>
+            {
+                _projectileSpawned.Add(projectile);
+                projectile.gameObject.SetActive(true);
+            },
+            projectile =>
+            {
+                _projectileSpawned.Remove(projectile);
+                projectile.gameObject.SetActive(false);
+            },
             projectile => Destroy(projectile.gameObject)
         );
 
@@ -54,7 +65,7 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
             () =>
             {
                 var newEnemy = Instantiate(_enemyPrefab, transform);
-                newEnemy.SetPool(_enemyPool, this);
+                newEnemy.SetPool(_enemyPool, _projectilePool);
                 return newEnemy;
             },
             enemy => enemy.gameObject.SetActive(true),
@@ -65,7 +76,7 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
     {
         _enemyColors = enemyColors;
         _waves = waves;
-        StartSpawningLoop();
+        StartSpawningLoop().Forget();
     }
 
     public void OnStopPlay()
@@ -73,21 +84,29 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
         StopAllActions();
     }
 
-    private void StartSpawningLoop()
+    private async UniTaskVoid StartSpawningLoop()
     {
-        var randomWave = _waves.GetRandomElement();
-        BeginWave(randomWave);
+        _isPerforming = true;
+        _monstersBehaviourCTS = new();
+        while (_isPerforming)
+        {
+            foreach (var wave in _waves)
+            {
+                PerformWave(wave);
+                await UniTask.WaitForSeconds(wave.Interval, cancellationToken: _monstersBehaviourCTS.Token);
+            }
+        }
     }
 
     public void StopAllActions()
     {
-        _spawningPatternTween.Kill();
+        _isPerforming = false;
+        _monstersBehaviourCTS.Cancel();
         ReleaseAllProjectiles();
     }
 
-    private void BeginWave(EnemyWaveConfigSO wave)
+    private void PerformWave(EnemyWaveConfigSO wave)
     {
-        _spawningPatternTween = DOVirtual.DelayedCall(wave.Interval, StartSpawningLoop);
         foreach (var behaviourConfig in wave.EnemyBehaviours)
         {
             var randomColor = _enemyColors.GetRandomElement();
@@ -113,23 +132,12 @@ public class EnemyManager : MonoBehaviour, IProjectileManager
         return projectile;
     }
 
-    public void ReturnProjectile(EnemyProjectile projectile)
-    {
-        _projectileSpawned.Remove(projectile);
-        _projectilePool.Release(projectile);
-    }
-
     private void ReleaseAllProjectiles()
     {
         foreach (var projectile in _projectileSpawned)
         {
             if (projectile.gameObject.activeSelf) _projectilePool.Release(projectile);
         }
+        _projectileSpawned.Clear();
     }
-}
-
-public interface IProjectileManager
-{
-    EnemyProjectile GetProjectile();
-    void ReturnProjectile(EnemyProjectile projectile);
 }

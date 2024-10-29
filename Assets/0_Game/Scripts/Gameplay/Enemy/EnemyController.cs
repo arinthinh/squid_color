@@ -22,17 +22,17 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private SpriteRenderer _avatar;
 
     private IObjectPool<EnemyController> _enemyPool;
-    private IProjectileManager _projectileManager;
+    private IObjectPool<Projectile> _projectilePool;
 
     private EnemyPositionConfig _positionConfig;
     private CancellationTokenSource _behaviourCTS = new();
 
     public EColor Color => _currentColor;
 
-    public void SetPool(IObjectPool<EnemyController> pool, IProjectileManager projectileManager)
+    public void SetPool(IObjectPool<EnemyController> pool, IObjectPool<Projectile> projectilePool)
     {
         _enemyPool = pool;
-        _projectileManager = projectileManager;
+        _projectilePool = projectilePool;
     }
 
     private void OnDisable() => CancelCurrentBehaviour();
@@ -45,12 +45,12 @@ public class EnemyController : MonoBehaviour
 
     public void OnSpawn(EColor color, EnemyBehaviourConfig behaviourConfig, EnemyPositionConfig positionConfig)
     {
+        // Set default state
         transform.localEulerAngles = Vector3.zero;
         _avatar.color = UnityEngine.Color.white;
-        
-        
         ChangeColor(color, EEnemyState.Full);
         _positionConfig = positionConfig;
+        
         PerformBehaviour(behaviourConfig).Forget();
     }
 
@@ -104,7 +104,7 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
-        var projectTile = _projectileManager.GetProjectile();
+        var projectTile = _projectilePool.Get();
         var startPosition = projectTile.transform.position = transform.position;
         var targetPosition = startPosition + Vector3.down * 25f;
         projectTile.Fly(targetPosition, 1f);

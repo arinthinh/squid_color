@@ -23,19 +23,20 @@ public class LevelController : MonoBehaviour
     private void OnEnable()
     {
         _timer.TimeChanged += OnTimerChanged;
-        _timer.TimeUp += OnTimeUp;
+        _timer.TimeUp += OnLoseLevel;
         _enemyManager.EnemyDie += OnEnemyDie;
     }
 
     private void OnDisable()
     {
         _timer.TimeChanged -= OnTimerChanged;
-        _timer.TimeUp -= OnTimeUp;
+        _timer.TimeUp -= OnLoseLevel;
         _enemyManager.EnemyDie -= OnEnemyDie;
     }
 
-    public void StartLevel(int levelIndex, InGameUIView inGameUIView)
+    public void StartLevel(int levelIndex)
     {
+        var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
         _config = ConfigManager.Instance.GetConfig<LevelConfigCollectionSO>().GetLevelConfig(levelIndex);
         _curLevelData = new(_config.Targets, _config.LevelTime);
 
@@ -45,10 +46,10 @@ public class LevelController : MonoBehaviour
         _timerPresenter = inGameUIView;
 
         _timerPresenter.ShowTimer(_curLevelData.SecondLeft);
-        _targetPresenter.LoadTargetInfo(_curLevelData.Targets);
+        _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
 
         _squid.OnStartPlay(_config.SquidStartedInks);
-        
+
         _enemyManager.OnStartPlay(_config.EmemyColors, _config.EnemyWaves);
     }
 
@@ -69,12 +70,16 @@ public class LevelController : MonoBehaviour
     private void OnWinLevel()
     {
         StopPlay();
-        // Save data
         GameDataController.Instance.OnWinLevel();
-        // Display UI
         UIManager.Instance.GetView<WinUIView>().Show();
-        // Raise event
         WinLevel?.Invoke();
+    }
+
+    private void OnLoseLevel()
+    {
+        StopPlay();
+        UIManager.Instance.GetView<LoseUIView>().Show();
+        LoseLevel?.Invoke();
     }
 
     private void OnTimerChanged(int secondLeft)
@@ -83,16 +88,11 @@ public class LevelController : MonoBehaviour
         _timerPresenter.UpdateTimer(secondLeft);
     }
 
-    private void OnTimeUp()
-    {
-        LoseLevel?.Invoke();
-    }
-
     private void OnEnemyDie(EColor color, Vector3 position)
     {
         var targetData = _curLevelData.GetTarget(color);
         targetData.Target--;
-        _targetPresenter.OnTargetInfoChanged(targetData.Color, targetData.Target, position);
+        _targetPresenter.UpdateTargetInfo(targetData.Color, targetData.Target);
         CheckWin();
     }
 }

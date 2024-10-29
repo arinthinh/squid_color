@@ -75,8 +75,7 @@ public class GameplayController : SingletonMono<GameplayController>
     private void ActiveLevelController(int levelIndex)
     {
         _levelController.gameObject.SetActive(true);
-        var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
-        _levelController.StartLevel(levelIndex, inGameUIView);
+        _levelController.StartLevel(levelIndex);
     }
 
     public enum EState

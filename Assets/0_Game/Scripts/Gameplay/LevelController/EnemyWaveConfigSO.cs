@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This SO contains data of enemies behaviour.
+/// </summary>
 public class EnemyWaveConfigSO : ScriptableObject
 {
     public float Interval = 1f;

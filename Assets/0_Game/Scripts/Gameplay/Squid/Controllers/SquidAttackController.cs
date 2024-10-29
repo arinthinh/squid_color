@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System;
+using DG.Tweening;
 using Redcode.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -24,7 +25,7 @@ public class SquidAttackController : SquidController
     private void OnEnable() => _shootAction.action.started += OnShootActionPerformed;
     private void OnDisable() => _shootAction.action.started -= OnShootActionPerformed;
 
-    public override void OnStartPlay()
+    private void Start()
     {
         _projectilePool = new ObjectPool<Projectile>(
             () =>
@@ -37,7 +38,29 @@ public class SquidAttackController : SquidController
             projectile => projectile.gameObject.SetActive(false),
             projectile => Destroy(projectile.gameObject)
         );
+    }
+
+    public override void OnStartPlay()
+    {
+        SetEnableAttack(true);
         LoadNewInk();
+    }
+
+    public override void OnStopPlay()
+    {
+        SetEnableAttack(false);
+    }
+
+    public void SetEnableAttack(bool canAttack)
+    {
+        if (canAttack)
+        {
+            _shootAction.action.Enable();
+        }
+        else
+        {
+            _shootAction.action.Disable();
+        }
     }
 
     public void Attack()

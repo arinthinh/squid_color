@@ -15,6 +15,9 @@ public class SquidInGameData
     }
 
     public int Position;
+    public int CurInk;
+    public int MaxInk;
+    public List<EColor> InkColors = new();
     public Dictionary<EColor, int> Inks = new();
 
     public bool IsOutOfInk => Inks.All(ink => ink.Value <= 0);

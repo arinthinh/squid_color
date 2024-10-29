@@ -9,4 +9,6 @@ public class SquidConfigSO : ScriptableObject
 
     [Header("SHOOT")]
     public float ShootCooldown = 0.2f;
+    public float StunTime = 1f;
+    public float InvisibleTime = 0.5f;
 }
