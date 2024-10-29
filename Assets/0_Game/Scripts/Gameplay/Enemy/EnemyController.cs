@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     [Header("DATA")]
     [SerializeField] private EColor _currentColor;
     [SerializeField] private int _health;
+    [SerializeField] private bool _isAlive;
 
     [Header("CONFIGS")]
     [SerializeField] private EnemySpritesConfigSO _sprites;
@@ -28,6 +29,7 @@ public class EnemyController : MonoBehaviour
     private CancellationTokenSource _behaviourCTS = new();
 
     public EColor Color => _currentColor;
+    public bool IsAlive => _isAlive;
 
     public void SetPool(IObjectPool<EnemyController> pool, IObjectPool<Projectile> projectilePool)
     {
@@ -37,7 +39,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnDisable() => CancelCurrentBehaviour();
 
-    private void CancelCurrentBehaviour()
+    public void CancelCurrentBehaviour()
     {
         _behaviourCTS.Cancel();
         _behaviourCTS = new();
@@ -45,12 +47,13 @@ public class EnemyController : MonoBehaviour
 
     public void OnSpawn(EColor color, EnemyBehaviourConfig behaviourConfig, EnemyPositionConfig positionConfig)
     {
+        _isAlive = true;
         // Set default state
         transform.localEulerAngles = Vector3.zero;
         _avatar.color = UnityEngine.Color.white;
         ChangeColor(color, EEnemyState.Full);
         _positionConfig = positionConfig;
-        
+
         PerformBehaviour(behaviourConfig).Forget();
     }
 
@@ -136,6 +139,7 @@ public class EnemyController : MonoBehaviour
 
     private void OnDie()
     {
+        _isAlive = false;
         CancelCurrentBehaviour();
         Die?.Invoke(this);
         PlayDieAnimation().Forget();

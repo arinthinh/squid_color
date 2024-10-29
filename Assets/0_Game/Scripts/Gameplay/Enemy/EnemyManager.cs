@@ -17,14 +17,15 @@ public class EnemyManager : MonoBehaviour
     [SerializeField] private EnemyController _enemyPrefab;
     [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
     [SerializeField] private EnemyPositionConfig _positionConfig;
-
+    
     private List<EColor> _enemyColors;
     private List<EnemyWaveConfigSO> _waves;
 
     private ObjectPool<EnemyController> _enemyPool;
     private ObjectPool<Projectile> _projectilePool;
 
-    private List<Projectile> _projectileSpawned = new();
+    private readonly List<Projectile> _projectileSpawned = new();
+    private readonly List<EnemyController> _curEnemies = new();
 
     private bool _isPerforming;
     private CancellationTokenSource _monstersBehaviourCTS;
@@ -68,8 +69,16 @@ public class EnemyManager : MonoBehaviour
                 newEnemy.SetPool(_enemyPool, _projectilePool);
                 return newEnemy;
             },
-            enemy => enemy.gameObject.SetActive(true),
-            enemy => enemy.gameObject.SetActive(false));
+            enemy =>
+            {
+                _curEnemies.Add(enemy);
+                enemy.gameObject.SetActive(true);
+            },
+            enemy =>
+            {
+                _curEnemies.Remove(enemy);
+                enemy.gameObject.SetActive(false);
+            });
     }
 
     public void OnStartPlay(List<EColor> enemyColors, List<EnemyWaveConfigSO> waves)
@@ -102,6 +111,7 @@ public class EnemyManager : MonoBehaviour
     {
         _isPerforming = false;
         _monstersBehaviourCTS.Cancel();
+        ReleaseAllMonsters();
         ReleaseAllProjectiles();
     }
 
@@ -130,6 +140,15 @@ public class EnemyManager : MonoBehaviour
         var projectile = _projectilePool.Get() as EnemyProjectile;
         _projectileSpawned.Add(projectile);
         return projectile;
+    }
+
+    private void ReleaseAllMonsters()
+    {
+        foreach (var enemy in _curEnemies)
+        {
+           _enemyPool.Release(enemy);
+        }
+        _curEnemies.Clear();
     }
 
     private void ReleaseAllProjectiles()

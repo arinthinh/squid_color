@@ -37,19 +37,19 @@ public class LevelController : MonoBehaviour
     public void StartLevel(int levelIndex)
     {
         var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
+
+        // Init data
         _config = ConfigManager.Instance.GetConfig<LevelConfigCollectionSO>().GetLevelConfig(levelIndex);
         _curLevelData = new(_config.Targets, _config.LevelTime);
-
-        _timer.Start(_curLevelData.SecondLeft);
-
         _targetPresenter = inGameUIView;
         _timerPresenter = inGameUIView;
 
+        // Enable gameplay units
+        _timer.Start(_curLevelData.SecondLeft);
         _timerPresenter.ShowTimer(_curLevelData.SecondLeft);
         _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
-
+        _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
         _squid.OnStartPlay(_config.SquidStartedInks);
-
         _enemyManager.OnStartPlay(_config.EmemyColors, _config.EnemyWaves);
     }
 
@@ -63,6 +63,7 @@ public class LevelController : MonoBehaviour
 
     private void StopPlay()
     {
+        _timer.Stop();
         _squid.OnStopPlay();
         _enemyManager.OnStopPlay();
     }
@@ -91,6 +92,7 @@ public class LevelController : MonoBehaviour
     private void OnEnemyDie(EColor color, Vector3 position)
     {
         var targetData = _curLevelData.GetTarget(color);
+        if (targetData is not { Target: > 0 }) return;
         targetData.Target--;
         _targetPresenter.UpdateTargetInfo(targetData.Color, targetData.Target);
         CheckWin();
@@ -100,6 +102,9 @@ public class LevelController : MonoBehaviour
 [Serializable]
 public class LevelData
 {
+    public int SecondLeft;
+    public List<TargetData> Targets = new();
+
     public LevelData(List<LevelConfig.TargetConfig> targetConfigs, int levelTime)
     {
         SecondLeft = levelTime;
@@ -109,9 +114,6 @@ public class LevelData
             Targets.Add(new(cfg.Color, cfg.Targets));
         }
     }
-
-    public int SecondLeft;
-    public List<TargetData> Targets = new();
 
     public TargetData GetTarget(EColor color)
     {
