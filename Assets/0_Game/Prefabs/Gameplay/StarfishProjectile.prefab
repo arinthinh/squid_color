@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 300950919504320248}
   - component: {fileID: 6327296626121965739}
   m_Layer: 0
-  m_Name: EnemyProjectile
+  m_Name: StarfishProjectile
   m_TagString: EnemyProjectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

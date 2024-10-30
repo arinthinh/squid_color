@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public class LevelConfigCollectionSO : ConfigCollection
 {
@@ -17,10 +18,8 @@ public class LevelConfig
 {
     public int Index;
     public int LevelTime;
-    public List<EColor> EmemyColors;
-    public List<SquidInkConfig> SquidStartedInks;
     public List<TargetConfig> Targets;
-    public List<EnemyWaveConfigSO> EnemyWaves;
+    public List<EnemyWaveConfig> EnemyWaves;
 
     [Serializable]
     public class TargetConfig
@@ -28,11 +27,29 @@ public class LevelConfig
         public EColor Color;
         public int Targets;
     }
+}
 
-    [Serializable]
-    public class SquidInkConfig
-    {
-        public EColor Color;
-        public int Count;
-    }
+/// <summary>
+/// This SO contains data of enemies behaviour.
+/// </summary>
+[Serializable]
+public class EnemyWaveConfig
+{
+    public float Interval = 1f;
+    public List<EnemyBehaviourConfig> EnemyBehaviours;
+}
+
+[Serializable]
+public class EnemyBehaviourConfig
+{
+    /// <summary>
+    /// Matrix position.
+    /// </summary>
+    public EColor Color;
+    public Vector2 TargetPosition;
+    public EDirection MoveInDirection;
+    public EDirection MoveOutDirection;
+    public float MoveDuration;
+    public float StayInterval;
+    public bool IsAttack;
 }

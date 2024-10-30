@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader 
 {
-    public static async UniTask LoadScene(string sceneName, float delayTime = 0f, Action onComplete = null)
+    public static async UniTask LoadScene(string sceneName, Action onComplete = null)
     {
-        await UniTask.Yield();
         var async = SceneManager.LoadSceneAsync(sceneName);
         if (async == null) return;
 
@@ -16,8 +15,6 @@ public class SceneLoader
         {
             await UniTask.Yield();
         }
-        await UniTask.Yield();
-        await UniTask.WaitForSeconds(delayTime);
         async.allowSceneActivation = true;
         await UniTask.Yield();
         onComplete?.Invoke();

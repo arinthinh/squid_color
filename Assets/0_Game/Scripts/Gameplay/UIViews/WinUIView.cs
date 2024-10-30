@@ -23,11 +23,13 @@ public class WinUIView : UIView
 
     private void OnHomeButtonClick()
     {
+        Hide();
         GameplayController.Instance.ExitLevel();
     }
 
     private void OnNextButtonClick()
     {
+        Hide();
         GameplayController.Instance.PlayNextLevel();
     }
 }

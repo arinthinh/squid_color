@@ -16,3 +16,8 @@ MonoBehaviour:
   MoveDistance: 4
   MoveDuration: 0.25
   ShootCooldown: 0.2
+  StunTime: 1
+  InvisibleTime: 0.5
+  MaxInkAmount: 5
+  InkReloadTime: 2
+  StartedInks: 010000000200000003000000

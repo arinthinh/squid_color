@@ -1,5 +1,7 @@
 ﻿using System;
 using DG.Tweening;
+using JSAM;
+using Redcode.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -29,6 +31,7 @@ public class SquidMoveController : SquidController
 
     public override void OnStartPlay()
     {
+        transform.SetPositionX(0);
         SetEnableMove(true);
     }
 
@@ -62,6 +65,9 @@ public class SquidMoveController : SquidController
         // Move to the target position with snapping
         _moveTransform.DOKill();
         _moveTransform.DOMove(targetPosition, _config.MoveDuration).SetEase(Ease.OutExpo);
+        
+        // Play sound
+        AudioManager.PlaySound(ESound.MoveSoundSO);
 
         // Play animation
         _animator.PlayAnimation(direction == MoveDirection.Left ? SquidAnimator.EAnimation.MoveLeft : SquidAnimator.EAnimation.MoveRight);

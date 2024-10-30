@@ -2,11 +2,11 @@
 using System.Linq;
 using UnityEngine;
 
-public class EnemySpritesConfigSO : ScriptableObject
+public class StarfishSpritesConfigSO : ScriptableObject
 {
     public SpriteConfig[] Sprites;
     
-    public Sprite GetSprite(EColor color, EEnemyState state)
+    public Sprite GetSprite(EColor color, EStarfishState state)
     {
         return Sprites.FirstOrDefault(s => s.Color == color && s.State == state)?.Sprite ?? Sprites[0].Sprite;
     }
@@ -14,7 +14,7 @@ public class EnemySpritesConfigSO : ScriptableObject
     [Serializable]
     public class SpriteConfig
     {
-        public EEnemyState State;
+        public EStarfishState State;
         public EColor Color;
         public Sprite Sprite;
     }

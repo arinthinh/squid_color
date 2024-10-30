@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SquidConfigSO : ScriptableObject
 {
@@ -11,4 +12,7 @@ public class SquidConfigSO : ScriptableObject
     public float ShootCooldown = 0.2f;
     public float StunTime = 1f;
     public float InvisibleTime = 0.5f;
+    public int MaxInkAmount;
+    public float InkReloadTime;
+    public List<EColor> StartedInks;
 }

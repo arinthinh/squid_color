@@ -8,7 +8,7 @@ public class TargetInfoUIPanel : MonoBehaviour
     [SerializeField] private Image _doneImage;
     [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _targetCountTMP;
-    [SerializeField] private EnemySpritesConfigSO _enemySpritesConfig;
+    [SerializeField] private StarfishSpritesConfigSO _starfishSpritesConfig;
 
     private EColor _curColor;
     public EColor Color => _curColor;
@@ -16,7 +16,7 @@ public class TargetInfoUIPanel : MonoBehaviour
     public void OnSpawn(EColor color)
     {
         _curColor = color;
-        _image.sprite = _enemySpritesConfig.GetSprite(color, EEnemyState.Die);
+        _image.sprite = _starfishSpritesConfig.GetSprite(color, EStarfishState.Die);
         _targetCountTMP.gameObject.SetActive(true);
         _doneImage.gameObject.SetActive(false);
     }

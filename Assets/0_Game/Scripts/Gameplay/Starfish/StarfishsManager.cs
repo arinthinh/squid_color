@@ -2,42 +2,39 @@
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Redcode.Extensions;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class EnemyManager : MonoBehaviour
+public class StarfishsManager : MonoBehaviour
 {
     /// <summary>
     /// (EColor color, Vector3 position)
     /// </summary>
     public event Action<EColor, Vector3> EnemyDie;
 
-    [SerializeField] private EnemyController _enemyPrefab;
-    [SerializeField] private EnemyProjectile _enemyProjectilePrefab;
-    [SerializeField] private EnemyPositionConfig _positionConfig;
-    
-    private List<EColor> _enemyColors;
-    private List<EnemyWaveConfigSO> _waves;
+    [SerializeField] private StarfishBehaviourController _starfishBehaviourPrefab;
+    [SerializeField] private StarfishProjectile _starfishProjectilePrefab;
+    [SerializeField] private StarfishPositionConfig _positionConfig;
 
-    private ObjectPool<EnemyController> _enemyPool;
+    private List<EnemyWaveConfig> _waves;
+
+    private ObjectPool<StarfishBehaviourController> _enemyPool;
     private ObjectPool<Projectile> _projectilePool;
 
     private readonly List<Projectile> _projectileSpawned = new();
-    private readonly List<EnemyController> _curEnemies = new();
+    private readonly List<StarfishBehaviourController> _curEnemies = new();
 
     private bool _isPerforming;
     private CancellationTokenSource _monstersBehaviourCTS;
 
     private void OnEnable()
     {
-        EnemyController.Die += OnEnemyDie;
+        StarfishBehaviourController.Die += OnEnemyDie;
     }
 
     private void OnDisable()
     {
-        EnemyController.Die -= OnEnemyDie;
+        StarfishBehaviourController.Die -= OnEnemyDie;
     }
 
     private void Start()
@@ -45,7 +42,7 @@ public class EnemyManager : MonoBehaviour
         _projectilePool = new ObjectPool<Projectile>(
             () =>
             {
-                var newProjectile = Instantiate(_enemyProjectilePrefab, transform);
+                var newProjectile = Instantiate(_starfishProjectilePrefab, transform);
                 newProjectile.SetPool(_projectilePool);
                 return newProjectile;
             },
@@ -62,10 +59,10 @@ public class EnemyManager : MonoBehaviour
             projectile => Destroy(projectile.gameObject)
         );
 
-        _enemyPool = new ObjectPool<EnemyController>(
+        _enemyPool = new ObjectPool<StarfishBehaviourController>(
             () =>
             {
-                var newEnemy = Instantiate(_enemyPrefab, transform);
+                var newEnemy = Instantiate(_starfishBehaviourPrefab, transform);
                 newEnemy.SetPool(_enemyPool, _projectilePool);
                 return newEnemy;
             },
@@ -81,9 +78,8 @@ public class EnemyManager : MonoBehaviour
             });
     }
 
-    public void OnStartPlay(List<EColor> enemyColors, List<EnemyWaveConfigSO> waves)
+    public void OnStartPlay(List<EnemyWaveConfig> waves)
     {
-        _enemyColors = enemyColors;
         _waves = waves;
         StartSpawningLoop().Forget();
     }
@@ -115,38 +111,37 @@ public class EnemyManager : MonoBehaviour
         ReleaseAllProjectiles();
     }
 
-    private void PerformWave(EnemyWaveConfigSO wave)
+    private void PerformWave(EnemyWaveConfig wave)
     {
         foreach (var behaviourConfig in wave.EnemyBehaviours)
         {
-            var randomColor = _enemyColors.GetRandomElement();
-            SpawnEnemy(randomColor, behaviourConfig);
+            SpawnEnemy(behaviourConfig);
         }
     }
 
-    private void SpawnEnemy(EColor color, EnemyBehaviourConfig enemyBehaviour)
+    private void SpawnEnemy(EnemyBehaviourConfig enemyBehaviour)
     {
         var enemy = _enemyPool.Get();
-        enemy.OnSpawn(color, enemyBehaviour, _positionConfig);
+        enemy.OnSpawn(enemyBehaviour, _positionConfig);
     }
 
-    private void OnEnemyDie(EnemyController enemy)
+    private void OnEnemyDie(StarfishBehaviourController starfishBehaviour)
     {
-        EnemyDie?.Invoke(enemy.Color, enemy.transform.position);
+        EnemyDie?.Invoke(starfishBehaviour.Color, starfishBehaviour.transform.position);
     }
 
-    public EnemyProjectile GetProjectile()
+    public StarfishProjectile GetProjectile()
     {
-        var projectile = _projectilePool.Get() as EnemyProjectile;
+        var projectile = _projectilePool.Get() as StarfishProjectile;
         _projectileSpawned.Add(projectile);
         return projectile;
     }
 
     private void ReleaseAllMonsters()
     {
-        foreach (var enemy in _curEnemies)
+        foreach (var enemy in _curEnemies.ToArray())
         {
-           _enemyPool.Release(enemy);
+            _enemyPool.Release(enemy);
         }
         _curEnemies.Clear();
     }

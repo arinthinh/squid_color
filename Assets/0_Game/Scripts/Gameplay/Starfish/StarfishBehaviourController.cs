@@ -2,13 +2,14 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using JSAM;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
-public class EnemyController : MonoBehaviour
+public class StarfishBehaviourController : MonoBehaviour
 {
-    public static event Action<EnemyController> Die;
+    public static event Action<StarfishBehaviourController> Die;
 
     [Header("DATA")]
     [SerializeField] private EColor _currentColor;
@@ -16,28 +17,28 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private bool _isAlive;
 
     [Header("CONFIGS")]
-    [SerializeField] private EnemySpritesConfigSO _sprites;
+    [SerializeField] private StarfishSpritesConfigSO _sprites;
     [SerializeField] private ColorMixFormulaConfigSO _colorMixFormula;
 
     [Header("COMPONENTS")]
     [SerializeField] private SpriteRenderer _avatar;
 
-    private IObjectPool<EnemyController> _enemyPool;
+    private IObjectPool<StarfishBehaviourController> _enemyPool;
     private IObjectPool<Projectile> _projectilePool;
 
-    private EnemyPositionConfig _positionConfig;
+    private StarfishPositionConfig _positionConfig;
     private CancellationTokenSource _behaviourCTS = new();
 
     public EColor Color => _currentColor;
     public bool IsAlive => _isAlive;
 
-    public void SetPool(IObjectPool<EnemyController> pool, IObjectPool<Projectile> projectilePool)
+    private void OnDisable() => CancelCurrentBehaviour();
+
+    public void SetPool(IObjectPool<StarfishBehaviourController> pool, IObjectPool<Projectile> projectilePool)
     {
         _enemyPool = pool;
         _projectilePool = projectilePool;
     }
-
-    private void OnDisable() => CancelCurrentBehaviour();
 
     public void CancelCurrentBehaviour()
     {
@@ -45,15 +46,17 @@ public class EnemyController : MonoBehaviour
         _behaviourCTS = new();
     }
 
-    public void OnSpawn(EColor color, EnemyBehaviourConfig behaviourConfig, EnemyPositionConfig positionConfig)
+    public void OnSpawn(EnemyBehaviourConfig behaviourConfig, StarfishPositionConfig positionConfig)
     {
-        _isAlive = true;
         // Set default state
+        _isAlive = true;
+        _positionConfig = positionConfig;
+        transform.localScale = Vector3.one;
         transform.localEulerAngles = Vector3.zero;
         _avatar.color = UnityEngine.Color.white;
-        ChangeColor(color, EEnemyState.Full);
-        _positionConfig = positionConfig;
+        ChangeColor(behaviourConfig.Color, EStarfishState.Full);
 
+        // Start
         PerformBehaviour(behaviourConfig).Forget();
     }
 
@@ -80,6 +83,7 @@ public class EnemyController : MonoBehaviour
 
         async UniTask MoveIn()
         {
+            PlayMoveAnimation(behaviourConfig.MoveInDirection, behaviourConfig.MoveDuration);
             await transform.DOMove(targetPosition, behaviourConfig.MoveDuration)
                 .WithCancellation(cancellationToken: _behaviourCTS.Token);
         }
@@ -99,6 +103,7 @@ public class EnemyController : MonoBehaviour
 
         async UniTask MoveOut()
         {
+            PlayMoveAnimation(behaviourConfig.MoveOutDirection, behaviourConfig.MoveDuration);
             var moveOutTargetPosition = targetPosition - offset;
             await transform.DOMove(moveOutTargetPosition, behaviourConfig.MoveDuration)
                 .WithCancellation(cancellationToken: _behaviourCTS.Token);
@@ -107,10 +112,17 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
+        PlayAttackAnimation();
         var projectTile = _projectilePool.Get();
         var startPosition = projectTile.transform.position = transform.position;
         var targetPosition = startPosition + Vector3.down * 25f;
         projectTile.Fly(targetPosition, 1f);
+    }
+
+    private void ChangeColor(EColor color, EStarfishState state)
+    {
+        _currentColor = color;
+        _avatar.sprite = _sprites.GetSprite(_currentColor, state);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -125,38 +137,59 @@ public class EnemyController : MonoBehaviour
     private void OnHitInk(EColor inkColor)
     {
         var newColor = _colorMixFormula.GetResult(_currentColor, inkColor);
-        ChangeColor(newColor, EEnemyState.Die);
+        ChangeColor(newColor, EStarfishState.Die);
 
+        AudioManager.PlaySound(ESound.HitSoundSO);
         _health--;
-        if (_health <= 0) OnDie();
+        if (_health <= 0) OnDie().Forget();
     }
 
-    private void ChangeColor(EColor color, EEnemyState state)
-    {
-        _currentColor = color;
-        _avatar.sprite = _sprites.GetSprite(_currentColor, state);
-    }
-
-    private void OnDie()
+    private async UniTaskVoid OnDie()
     {
         _isAlive = false;
         CancelCurrentBehaviour();
         Die?.Invoke(this);
-        PlayDieAnimation().Forget();
+        await PlayDieAnimation();
+        // Back to pool
+        if (gameObject.activeSelf) _enemyPool.Release(this);
     }
 
     private async UniTask PlayDieAnimation()
     {
         var animationTime = 0.8f;
+        transform.DOKill();
+        transform.eulerAngles = Vector3.zero;
         _avatar.DOFade(0, animationTime);
         transform.DORotate(Vector3.back * 60f, animationTime);
         transform.DOMoveY(transform.position.y + 5f, animationTime);
-        await UniTask.WaitForSeconds(animationTime);
-        _enemyPool.Release(this);
+        // Wait animation complete
+        await UniTask.WaitForSeconds(animationTime, cancellationToken: _behaviourCTS.Token);
+    }
+
+    private void PlayAttackAnimation()
+    {
+        transform.DOKill();
+        transform.DOPunchScale(Vector3.one * 0.1f, 0.25f)
+            .OnComplete(() => transform.localScale = Vector3.one);
+    }
+
+    private void PlayMoveAnimation(EDirection moveDirection, float moveDuration)
+    {
+        transform.DOKill();
+        transform.eulerAngles = Vector3.zero;
+
+        var rotateValue = moveDirection switch
+        {
+            EDirection.Left => 20f,
+            EDirection.Right => -20f,
+            _ => 0f
+        };
+        transform.DORotate(Vector3.forward * rotateValue, moveDuration / 2f)
+            .OnComplete(() => transform.DORotate(Vector3.zero, moveDuration / 2f));
     }
 }
 
-public enum EEnemyState
+public enum EStarfishState
 {
     Full,
     Haft,

@@ -5,26 +5,17 @@ using System.Linq;
 [Serializable]
 public class SquidInGameData
 {
-    public SquidInGameData(List<LevelConfig.SquidInkConfig> startedInk)
+    public SquidInGameData(List<EColor> startedInk, int maxInkAmount)
     {
         Position = 0;
         foreach (var ink in startedInk)
         {
-            Inks.Add(ink.Color, ink.Count);
+            Inks.Add(ink, maxInkAmount);
         }
+        CurColor = Inks.First().Key;
     }
 
     public int Position;
-    public int CurInk;
-    public int MaxInk;
-    public List<EColor> InkColors = new();
     public Dictionary<EColor, int> Inks = new();
-
-    public bool IsOutOfInk => Inks.All(ink => ink.Value <= 0);
     public EColor CurColor;
-
-    public EColor GetValidInk()
-    {
-        return !IsOutOfInk ? Inks.First(ink => ink.Value > 0).Key : EColor.White;
-    }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour
@@ -13,7 +14,7 @@ public class LevelController : MonoBehaviour
 
     [Header("LEVEL UNITS")]
     [SerializeField] private Squid _squid;
-    [SerializeField] private EnemyManager _enemyManager;
+    [SerializeField] private StarfishsManager _starfishsManager;
 
     private LevelConfig _config;
     private ITargetPresenter _targetPresenter;
@@ -24,18 +25,19 @@ public class LevelController : MonoBehaviour
     {
         _timer.TimeChanged += OnTimerChanged;
         _timer.TimeUp += OnLoseLevel;
-        _enemyManager.EnemyDie += OnEnemyDie;
+        _starfishsManager.EnemyDie += StarfishsDie;
     }
 
     private void OnDisable()
     {
         _timer.TimeChanged -= OnTimerChanged;
         _timer.TimeUp -= OnLoseLevel;
-        _enemyManager.EnemyDie -= OnEnemyDie;
+        _starfishsManager.EnemyDie -= StarfishsDie;
     }
 
-    public void StartLevel(int levelIndex)
+    public async UniTaskVoid StartLevel(int levelIndex)
     {
+        await UniTask.Yield();
         var inGameUIView = UIManager.Instance.GetView<InGameUIView>();
 
         // Init data
@@ -48,9 +50,8 @@ public class LevelController : MonoBehaviour
         _timer.Start(_curLevelData.SecondLeft);
         _timerPresenter.ShowTimer(_curLevelData.SecondLeft);
         _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
-        _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
-        _squid.OnStartPlay(_config.SquidStartedInks);
-        _enemyManager.OnStartPlay(_config.EmemyColors, _config.EnemyWaves);
+        _squid.OnStartPlay();
+        _starfishsManager.OnStartPlay(_config.EnemyWaves);
     }
 
     private void CheckWin()
@@ -65,7 +66,7 @@ public class LevelController : MonoBehaviour
     {
         _timer.Stop();
         _squid.OnStopPlay();
-        _enemyManager.OnStopPlay();
+        _starfishsManager.OnStopPlay();
     }
 
     private void OnWinLevel()
@@ -89,7 +90,7 @@ public class LevelController : MonoBehaviour
         _timerPresenter.UpdateTimer(secondLeft);
     }
 
-    private void OnEnemyDie(EColor color, Vector3 position)
+    private void StarfishsDie(EColor color, Vector3 position)
     {
         var targetData = _curLevelData.GetTarget(color);
         if (targetData is not { Target: > 0 }) return;

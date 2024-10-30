@@ -1,5 +1,8 @@
-﻿using System;
+﻿using System.Linq;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using JSAM;
 using Redcode.Extensions;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,16 +17,25 @@ public class SquidAttackController : SquidController
     [Header("INPUT ACTIONS")]
     [SerializeField] private InputActionReference _shootAction;
 
+    [Header("OTHERS CONTROLLER")]
+    [SerializeField] private SquidColorSelector _colorSelector;
     [SerializeField] private SquidAnimator _animator;
 
     private ObjectPool<Projectile> _projectilePool;
 
-    private EColor _currentInkColor;
     private bool _isCooldown;
     private Tween _shootCooldownTimer;
 
+    private CancellationTokenSource _cts = new();
+
     private void OnEnable() => _shootAction.action.started += OnShootActionPerformed;
-    private void OnDisable() => _shootAction.action.started -= OnShootActionPerformed;
+
+    private void OnDisable()
+    {
+        _cts.Cancel();
+        _cts = new();
+        _shootAction.action.started -= OnShootActionPerformed;
+    }
 
     private void Start()
     {
@@ -43,11 +55,12 @@ public class SquidAttackController : SquidController
     public override void OnStartPlay()
     {
         SetEnableAttack(true);
-        LoadNewInk();
     }
 
     public override void OnStopPlay()
     {
+        _cts.Cancel();
+        _cts = new();
         SetEnableAttack(false);
     }
 
@@ -65,20 +78,21 @@ public class SquidAttackController : SquidController
 
     public void Attack()
     {
-        if (_data.IsOutOfInk)
+        // If is out of current ink
+        if (_data.Inks[_data.CurColor] == 0)
         {
             return;
         }
 
         if (_isCooldown) return;
 
+        AudioManager.PlaySound(ESound.AttackSoundSO);
         // Use color 
         _animator.PlayAnimation(SquidAnimator.EAnimation.Shoot);
-        ShootInkProjectile(_currentInkColor);
+        ShootInkProjectile(_data.CurColor);
         StartCooldown(_config.ShootCooldown);
-
-        var inkLeft = _data.Inks[_currentInkColor]--;
-        if (inkLeft == 0) LoadNewInk();
+        _data.Inks[_data.CurColor]--;
+        OnInkUsed();
     }
 
     private void ShootInkProjectile(EColor color)
@@ -101,9 +115,21 @@ public class SquidAttackController : SquidController
         _shootCooldownTimer = DOVirtual.DelayedCall(cooldownTime, () => _isCooldown = false);
     }
 
-    private void LoadNewInk()
+    private void OnInkUsed()
     {
-        _currentInkColor = _data.GetValidInk();
+        _colorSelector.UpdateDisplayAmount();
+        foreach (var inkInfo in _data.Inks.Where(inkInfo => inkInfo.Value == 0))
+        {
+            ReloadInk(inkInfo.Key).Forget();
+        }
+    }
+
+    private async UniTaskVoid ReloadInk(EColor inkColor)
+    {
+        _colorSelector.PlayReloadAnimation(inkColor, _config.InkReloadTime);
+        await UniTask.WaitForSeconds(_config.InkReloadTime, cancellationToken: _cts.Token);
+        _data.Inks[inkColor] = _config.MaxInkAmount;
+        _colorSelector.UpdateDisplayAmount();
     }
 
     private void OnShootActionPerformed(InputAction.CallbackContext context) => Attack();

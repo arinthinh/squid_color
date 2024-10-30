@@ -17,8 +17,13 @@ MonoBehaviour:
   musicCategories:
   - 
   Sounds:
-  - {fileID: 11400000, guid: 9c9a9f657f04dc246a81e651102fe563, type: 2}
-  Music: []
+  - {fileID: 11400000, guid: 450c9d34acf9c4145a3b72f2ddac2873, type: 2}
+  - {fileID: 11400000, guid: bef8b62512c277b4a9472e896bf4f998, type: 2}
+  - {fileID: 11400000, guid: 324a5756bcbeef4499fdef5602eec3d7, type: 2}
+  - {fileID: 11400000, guid: 2731d6ed6c81aea48b7baa84a300b710, type: 2}
+  Music:
+  - {fileID: 11400000, guid: 791e9ce1772d41a459ed58396673f0c3, type: 2}
+  - {fileID: 11400000, guid: 21e19a2e8b4adc34cb6be140ae8d140c, type: 2}
   useCustomNames: 1
   generatedName: AudioLib
   musicEnum: EMusic
@@ -32,9 +37,14 @@ MonoBehaviour:
   soundCategoriesToList:
   - name: 
     files:
-    - {fileID: 11400000, guid: 9c9a9f657f04dc246a81e651102fe563, type: 2}
+    - {fileID: 11400000, guid: 450c9d34acf9c4145a3b72f2ddac2873, type: 2}
+    - {fileID: 11400000, guid: bef8b62512c277b4a9472e896bf4f998, type: 2}
+    - {fileID: 11400000, guid: 324a5756bcbeef4499fdef5602eec3d7, type: 2}
+    - {fileID: 11400000, guid: 2731d6ed6c81aea48b7baa84a300b710, type: 2}
     foldout: 1
   musicCategoriesToList:
   - name: 
-    files: []
+    files:
+    - {fileID: 11400000, guid: 791e9ce1772d41a459ed58396673f0c3, type: 2}
+    - {fileID: 11400000, guid: 21e19a2e8b4adc34cb6be140ae8d140c, type: 2}
     foldout: 1

@@ -1,5 +1,10 @@
     public enum ESound {
-        Tap
+        MoveSoundSO,
+        TransitionSoundSO,
+        HitSoundSO,
+        AttackSoundSO
     }
     public enum EMusic {
+        InGameBGMSO,
+        HomeBGMSO
     }

@@ -10,9 +10,9 @@ public class Squid : MonoBehaviour
     [Header("CONTROLLERS")]
     [SerializeField] private List<SquidController> _controllers;
 
-    public void OnStartPlay(List<LevelConfig.SquidInkConfig> startedInk)
+    public void OnStartPlay()
     {
-        _inGameData = new(startedInk);
+        _inGameData = new(_config.StartedInks, _config.MaxInkAmount);
 
         _controllers.ForEach(c =>
         {

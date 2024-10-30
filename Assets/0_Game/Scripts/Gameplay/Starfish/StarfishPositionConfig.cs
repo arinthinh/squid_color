@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class EnemyPositionConfig
+public class StarfishPositionConfig
 {
     public float Spacing;
     public int XLength;
@@ -21,7 +21,7 @@ public class EnemyPositionConfig
         {
             for (var y = 0; y < YLength; y++)
             {
-                Positions.Add(new(new Vector2(x, y), new Vector2(startPosition.x + x * Spacing, startPosition.y + y * Spacing)));
+                Positions.Add(new(new Vector2(x, y), new Vector2(startPosition.x + x * Spacing, startPosition.y - y * Spacing)));
             }
         }
     }
