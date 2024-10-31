@@ -17,20 +17,20 @@ public class CountdownUIView : UIView
 
     private async UniTaskVoid PerformCountdown()
     {
-        _cooldownText.rectTransform.SetAnchoredPositionY(-40);
+        _cooldownText.rectTransform.SetAnchoredPositionY(-100);
         _cooldownText.rectTransform.DOAnchorPosY(0, 0.5f);
         _cooldownText.text = "3";
         await UniTask.WaitForSeconds(1f);
-        _cooldownText.rectTransform.SetAnchoredPositionY(-40);
-        _cooldownText.rectTransform.DOAnchorPosY(-40, 0.5f);
+        _cooldownText.rectTransform.SetAnchoredPositionY(-100);
+        _cooldownText.rectTransform.DOAnchorPosY(0, 0.5f);
         _cooldownText.text = "2";
         await UniTask.WaitForSeconds(1f);
-        _cooldownText.rectTransform.SetAnchoredPositionY(-40);
-        _cooldownText.rectTransform.DOAnchorPosY(-40, 0.5f);
+        _cooldownText.rectTransform.SetAnchoredPositionY(-100);
+        _cooldownText.rectTransform.DOAnchorPosY(0, 0.5f);
         _cooldownText.text = "1";
         await UniTask.WaitForSeconds(1f);
-        _cooldownText.rectTransform.SetAnchoredPositionY(-40);
-        _cooldownText.rectTransform.DOAnchorPosY(-40, 0.5f);
+        _cooldownText.rectTransform.SetAnchoredPositionY(-100);
+        _cooldownText.rectTransform.DOAnchorPosY(0, 0.5f);
         _cooldownText.text = "START!";
         await UniTask.WaitForSeconds(1f);
         Hide();

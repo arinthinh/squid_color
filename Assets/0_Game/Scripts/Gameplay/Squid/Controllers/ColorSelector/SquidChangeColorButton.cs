@@ -12,8 +12,10 @@ public class SquidChangeColorButton : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private EColor _color;
     [SerializeField] private Image _image;
+    [SerializeField] private Image _selectedImage;
     [SerializeField] private TextMeshProUGUI _amountTMP;
 
+    private int _currentValue;
     private Button _button;
     public EColor Color => _color;
     public int Index => _index;
@@ -43,11 +45,21 @@ public class SquidChangeColorButton : MonoBehaviour
         _image.DOFillAmount(1, reloadTime);
     }
 
+    public void SetSelected(bool isSelected)
+    {
+        _selectedImage.gameObject.SetActive(isSelected);
+    }
+
     public void UpdateDisplayAmount(int inkDataValue, int maxInkValue)
     {
-        _amountTMP.transform.DOKill();
-        _amountTMP.transform.localScale = Vector3.one;
-        _amountTMP.transform.DOPunchScale(Vector3.one * 0.1f, 0.25f);
+        if (inkDataValue != _currentValue)
+        {
+            _amountTMP.transform.DOKill();
+            _amountTMP.transform.localScale = Vector3.one;
+            _amountTMP.transform.DOPunchScale(Vector3.one * 0.1f, 0.25f);
+        }
+
+        _currentValue = inkDataValue;
         _amountTMP.text = inkDataValue.ToString();
         _image.fillAmount = (float)inkDataValue / maxInkValue;
     }

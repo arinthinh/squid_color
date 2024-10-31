@@ -30,6 +30,12 @@ public class SquidMoveController : SquidController
         _moveRightAction.action.started -= OnInputMoveRight;
     }
 
+    public override void Init(SquidConfigSO config, SquidInGameData inGameData)
+    {
+        base.Init(config, inGameData);
+        SetEnableMove(false);
+    }
+
     public override void OnStartPlay()
     {
         transform.SetPositionX(0);

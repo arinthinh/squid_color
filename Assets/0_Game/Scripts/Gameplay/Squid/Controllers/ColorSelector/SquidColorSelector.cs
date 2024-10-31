@@ -35,30 +35,57 @@ public class SquidColorSelector : SquidController
         SquidChangeColorButton.Clicked -= OnChangeColorButtonClick;
     }
 
+    public override void Init(SquidConfigSO config, SquidInGameData inGameData)
+    {
+        base.Init(config, inGameData);
+        ChangeColorImmediately(_data.CurColor);
+        UpdateDisplayAmount();
+
+        _changeColorButton1.action.Disable();
+        _changeColorButton2.action.Disable();
+        _changeColorButton3.action.Disable();
+    }
 
     public override void OnStartPlay()
     {
+        _changeColorButton1.action.Enable();
+        _changeColorButton2.action.Enable();
+        _changeColorButton3.action.Enable();
         base.OnStartPlay();
-        UpdateDisplayAmount();
-        ChangeColorImmediately(_data.CurColor);
     }
-    
+
+    public override void OnStopPlay()
+    {
+        _changeColorButton1.action.Disable();
+        _changeColorButton2.action.Disable();
+        _changeColorButton3.action.Disable();
+        base.OnStopPlay();
+    }
+
     private void ChangeColorImmediately(EColor color)
     {
         _isSwitching = false;
         _data.CurColor = color;
         _animator.PlaySwitchColorAnimation(color, true);
+        UpdateSelected();
     }
 
     private async UniTaskVoid PerformChangeColor(EColor color)
     {
+        if (_isSwitching) return;
         if (_stunController.IsStun) return;
         if (color == _data.CurColor) return;
         _isSwitching = true;
         _data.CurColor = color;
         _animator.PlaySwitchColorAnimation(color);
+        UpdateSelected();
         await UniTask.WaitForSeconds(_config.SwitchColorTime);
         _isSwitching = false;
+    }
+
+    private void UpdateSelected()
+    {
+        foreach (var btn in _buttons) btn.SetSelected(btn.Color == _data.CurColor);
     }
 
     public void PlayReloadAnimation(EColor inkColor, float reloadTime)

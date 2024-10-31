@@ -15,13 +15,6 @@ MonoBehaviour:
   Configs:
   - Index: 0
     LevelTime: 60
-    SquidStartedInks:
-    - Color: 2
-      Count: 10
-    - Color: 1
-      Count: 10
-    - Color: 3
-      Count: 10
     Targets:
     - Color: 4
       Targets: 15
@@ -34,35 +27,35 @@ MonoBehaviour:
         MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 0
+        IsAttack: 1
       - Color: 1
         TargetPosition: {x: 1, y: 0}
         MoveInDirection: 0
         MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 0
+        IsAttack: 1
       - Color: 1
         TargetPosition: {x: 2, y: 0}
         MoveInDirection: 0
         MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 0
+        IsAttack: 1
       - Color: 1
         TargetPosition: {x: 3, y: 0}
         MoveInDirection: 0
         MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 0
+        IsAttack: 1
       - Color: 1
         TargetPosition: {x: 4, y: 0}
         MoveInDirection: 0
         MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 0
+        IsAttack: 1
     - Interval: 6
       EnemyBehaviours:
       - Color: 1

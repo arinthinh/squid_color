@@ -153,7 +153,7 @@ public class StarfishsManager : MonoBehaviour
 
     private void ReleaseAllProjectiles()
     {
-        foreach (var projectile in _projectileSpawned)
+        foreach (var projectile in _projectileSpawned.ToArray())
         {
             if (projectile.gameObject.activeSelf) _projectilePool.Release(projectile);
         }

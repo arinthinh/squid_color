@@ -53,6 +53,12 @@ public class SquidAttackController : SquidController
         );
     }
 
+    public override void Init(SquidConfigSO config, SquidInGameData inGameData)
+    {
+        base.Init(config, inGameData);
+        SetEnableAttack(false);
+    }
+
     public override void OnStartPlay()
     {
         SetEnableAttack(true);
