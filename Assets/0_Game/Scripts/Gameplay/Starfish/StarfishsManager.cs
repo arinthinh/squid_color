@@ -78,6 +78,11 @@ public class StarfishsManager : MonoBehaviour
             });
     }
 
+    public void Init()
+    {
+        
+    }
+
     public void OnStartPlay(List<EnemyWaveConfig> waves)
     {
         _waves = waves;

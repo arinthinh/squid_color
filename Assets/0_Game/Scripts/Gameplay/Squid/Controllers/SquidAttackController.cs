@@ -20,6 +20,7 @@ public class SquidAttackController : SquidController
     [Header("OTHERS CONTROLLER")]
     [SerializeField] private SquidColorSelector _colorSelector;
     [SerializeField] private SquidAnimator _animator;
+    [SerializeField] private SquidStunController _stunController;
 
     private ObjectPool<Projectile> _projectilePool;
 
@@ -78,6 +79,9 @@ public class SquidAttackController : SquidController
 
     public void Attack()
     {
+        if (_colorSelector.IsSwitching) return;
+        if (_stunController.IsStun) return;
+
         // If is out of current ink
         if (_data.Inks[_data.CurColor] == 0)
         {

@@ -45,11 +45,21 @@ public class LevelController : MonoBehaviour
         _curLevelData = new(_config.Targets, _config.LevelTime);
         _targetPresenter = inGameUIView;
         _timerPresenter = inGameUIView;
+        
+        // Init view
+        _timerPresenter.ShowTimer(_curLevelData.SecondLeft);
+        _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
+        
+        // Init units
+        _squid.Init();
+        _starfishsManager.Init();
+        
+        // Play countdown
+        UIManager.Instance.GetView<CountdownUIView>().Show();
+        await UniTask.WaitForSeconds(4f);
 
         // Enable gameplay units
         _timer.Start(_curLevelData.SecondLeft);
-        _timerPresenter.ShowTimer(_curLevelData.SecondLeft);
-        _targetPresenter.LoadTargetsInfo(_curLevelData.Targets);
         _squid.OnStartPlay();
         _starfishsManager.OnStartPlay(_config.EnemyWaves);
     }

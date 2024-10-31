@@ -12,6 +12,7 @@ public class SquidMoveController : SquidController
 
     [Header("ANIMATOR")]
     [SerializeField] private SquidAnimator _animator;
+    [SerializeField] private SquidStunController _stunController;
 
     [Header("INPUT ACTIONS")]
     [SerializeField] private InputActionReference _moveLeftAction;
@@ -56,6 +57,8 @@ public class SquidMoveController : SquidController
 
     public void Move(MoveDirection direction)
     {
+        if (_stunController.IsStun) return;
+        
         var nextPosition = _data.Position + (direction == MoveDirection.Left ? -1 : 1);
         if (Mathf.Abs(nextPosition) > _config.MaxMoveIndex) return;
         _data.Position = nextPosition;

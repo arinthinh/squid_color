@@ -15,4 +15,5 @@ public class SquidConfigSO : ScriptableObject
     public int MaxInkAmount;
     public float InkReloadTime;
     public List<EColor> StartedInks;
+    public float SwitchColorTime = 0.25f;
 }

@@ -10,19 +10,14 @@ public class Squid : MonoBehaviour
     [Header("CONTROLLERS")]
     [SerializeField] private List<SquidController> _controllers;
 
-    public void OnStartPlay()
+    public void Init()
     {
         _inGameData = new(_config.StartedInks, _config.MaxInkAmount);
-
-        _controllers.ForEach(c =>
-        {
-            c.LoadData(_config, _inGameData);
-            c.OnStartPlay();
-        });
+        _controllers.ForEach(c => c.Init(_config, _inGameData));
     }
-
-    public void OnStopPlay()
-    {
-        _controllers.ForEach(crl => crl.OnStopPlay());
-    }
+    
+    public void OnStartPlay() => _controllers.ForEach(c => c.OnStartPlay());
+    
+    public void OnStopPlay() => _controllers.ForEach(c => c.OnStopPlay());
+    
 }

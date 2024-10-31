@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class SquidStunController : SquidController
 {
-    [SerializeField] private SquidMoveController _moveController;
     [SerializeField] private SquidAnimator _animator;
-    [SerializeField] private SquidAttackController _attackController;
 
     private bool _isStun = false;
     private bool _isInvisible = false;
-    
+
     private Tween _stopStunTween;
     private Tween _stopInvisibleTween;
+
+    public bool IsStun => _isStun;
+    public bool IsInvisible => _isInvisible;
+
+    public override void OnStopPlay()
+    {
+        base.OnStopPlay();
+        _isStun = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,15 +31,12 @@ public class SquidStunController : SquidController
 
     private void Stun(float stunTime)
     {
-        if(_isInvisible) return;
-        if(_isStun) return;
-        
+        if (_isInvisible) return;
+        if (_isStun) return;
+
         _isStun = true;
 
-        _moveController.SetEnableMove(false);
-        _attackController.SetEnableAttack(false);
         _animator.PlayAnimation(SquidAnimator.EAnimation.Stun);
-        
         _stopStunTween?.Kill();
         _stopStunTween = DOVirtual.DelayedCall(stunTime, StopStun);
     }
@@ -41,8 +45,7 @@ public class SquidStunController : SquidController
     {
         _stopStunTween?.Kill();
         _isStun = false;
-        _moveController.SetEnableMove(true);
-        _attackController.SetEnableAttack(true);
+
         _animator.PlayAnimation(SquidAnimator.EAnimation.Idle);
         BeInvisible();
     }
@@ -54,7 +57,7 @@ public class SquidStunController : SquidController
         _animator.PlayAnimation(SquidAnimator.EAnimation.Invisible);
         _stopInvisibleTween = DOVirtual.DelayedCall(_config.InvisibleTime, StopInvisible);
     }
-    
+
     private void StopInvisible()
     {
         _animator.PlayAnimation(SquidAnimator.EAnimation.Idle);

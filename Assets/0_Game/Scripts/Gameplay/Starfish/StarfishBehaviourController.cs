@@ -13,7 +13,6 @@ public class StarfishBehaviourController : MonoBehaviour
 
     [Header("DATA")]
     [SerializeField] private EColor _currentColor;
-    [SerializeField] private int _health;
     [SerializeField] private bool _isAlive;
 
     [Header("CONFIGS")]
@@ -137,11 +136,15 @@ public class StarfishBehaviourController : MonoBehaviour
     private void OnHitInk(EColor inkColor)
     {
         var newColor = _colorMixFormula.GetResult(_currentColor, inkColor);
-        ChangeColor(newColor, EStarfishState.Die);
+        if (newColor == _currentColor)
+        {
+            AudioManager.PlaySound(ESound.HitSoundSO);
+            return;
+        }
 
+        ChangeColor(newColor, EStarfishState.Die);
         AudioManager.PlaySound(ESound.HitSoundSO);
-        _health--;
-        if (_health <= 0) OnDie().Forget();
+        OnDie().Forget();
     }
 
     private async UniTaskVoid OnDie()
