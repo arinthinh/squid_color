@@ -1867,7 +1867,7 @@ MonoBehaviour:
         hash: -1
       - displayName: OnScreenButton
         name: UnityEngine.InputSystem.OnScreen.OnScreenButton, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: OnScreenButton
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -1879,7 +1879,7 @@ MonoBehaviour:
         hash: -1
       - displayName: OnScreenStick
         name: UnityEngine.InputSystem.OnScreen.OnScreenStick, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: OnScreenStick
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -1950,7 +1950,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: PlayerInput
-        name: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: PlayerInput
@@ -1962,7 +1962,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: PlayerInputManager
-        name: UnityEngine.InputSystem.PlayerInputManager, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.PlayerInputManager, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: PlayerInputManager
@@ -2077,6 +2077,30 @@ MonoBehaviour:
           m_Image: {fileID: 7136189600330326936, guid: 0000000000000000d000000000000000, type: 0}
           m_Tooltip: Projector
           m_TextWithWhitespace: "Projector\u200B"
+        shown: 0
+        isBuiltIn: 1
+        script: {fileID: 0}
+        hash: -1
+      - displayName: RecorderBindings
+        name: UnityEngine.Recorder.RecorderBindings, Unity.Recorder, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: RecorderBindings
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
+          m_Tooltip: RecorderBindings
+          m_TextWithWhitespace: "RecorderBindings\u200B"
+        shown: 0
+        isBuiltIn: 1
+        script: {fileID: 0}
+        hash: -1
+      - displayName: RecorderComponent
+        name: UnityEditor.Recorder.RecorderComponent, Unity.Recorder.Editor, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: RecorderComponent
+          m_Image: {fileID: 8779834242249542326, guid: 0000000000000000d000000000000000, type: 0}
+          m_Tooltip: RecorderComponent
+          m_TextWithWhitespace: "RecorderComponent\u200B"
         shown: 0
         isBuiltIn: 1
         script: {fileID: 0}
@@ -2275,7 +2299,7 @@ MonoBehaviour:
         hash: -1
       - displayName: TouchSimulation
         name: UnityEngine.InputSystem.EnhancedTouch.TouchSimulation, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TouchSimulation
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -2286,7 +2310,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: TrackedPoseDriver
-        name: UnityEngine.InputSystem.XR.TrackedPoseDriver, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.XR.TrackedPoseDriver, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TrackedPoseDriver
@@ -2898,7 +2922,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: VirtualMouseInput
-        name: UnityEngine.InputSystem.UI.VirtualMouseInput, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.UI.VirtualMouseInput, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: VirtualMouseInput
@@ -2972,7 +2996,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: BaseInputOverride
-        name: UnityEngine.InputSystem.UI.BaseInputOverride, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.UI.BaseInputOverride, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: BaseInputOverride
@@ -3165,7 +3189,7 @@ MonoBehaviour:
         hash: -1
       - displayName: InputSystemUIInputModule
         name: UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: InputSystemUIInputModule
           m_Image: {fileID: 2800000, guid: 3028dc075ba8c584d9bc7d1e0255e038, type: 3}
@@ -3213,7 +3237,7 @@ MonoBehaviour:
         hash: -1
       - displayName: MultiplayerEventSystem
         name: UnityEngine.InputSystem.UI.MultiplayerEventSystem, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: MultiplayerEventSystem
           m_Image: {fileID: 2800000, guid: 6a237171e2346e3458db37eb0f90d42b, type: 3}
@@ -3465,7 +3489,7 @@ MonoBehaviour:
         hash: -1
       - displayName: TrackedDeviceRaycaster
         name: UnityEngine.InputSystem.UI.TrackedDeviceRaycaster, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TrackedDeviceRaycaster
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -5055,6 +5079,18 @@ MonoBehaviour:
         isBuiltIn: 1
         script: {fileID: 0}
         hash: -1
+      - displayName: RecorderComponent
+        name: UnityEditor.Recorder.RecorderComponent, Unity.Recorder.Editor, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: RecorderComponent
+          m_Image: {fileID: 8779834242249542326, guid: 0000000000000000d000000000000000, type: 0}
+          m_Tooltip: RecorderComponent
+          m_TextWithWhitespace: "RecorderComponent\u200B"
+        shown: 0
+        isBuiltIn: 1
+        script: {fileID: 0}
+        hash: -1
       - displayName: NavMeshAgent
         name: UnityEngine.AI.NavMeshAgent, UnityEngine.AIModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
@@ -5837,7 +5873,7 @@ MonoBehaviour:
         hash: -1
       - displayName: TouchSimulation
         name: UnityEngine.InputSystem.EnhancedTouch.TouchSimulation, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TouchSimulation
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -5849,7 +5885,7 @@ MonoBehaviour:
         hash: -1
       - displayName: OnScreenButton
         name: UnityEngine.InputSystem.OnScreen.OnScreenButton, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: OnScreenButton
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -5861,7 +5897,7 @@ MonoBehaviour:
         hash: -1
       - displayName: OnScreenStick
         name: UnityEngine.InputSystem.OnScreen.OnScreenStick, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: OnScreenStick
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -5872,7 +5908,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: PlayerInput
-        name: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.PlayerInput, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: PlayerInput
@@ -5884,7 +5920,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: PlayerInputManager
-        name: UnityEngine.InputSystem.PlayerInputManager, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.PlayerInputManager, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: PlayerInputManager
@@ -5896,7 +5932,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: BaseInputOverride
-        name: UnityEngine.InputSystem.UI.BaseInputOverride, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.UI.BaseInputOverride, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: BaseInputOverride
@@ -5909,7 +5945,7 @@ MonoBehaviour:
         hash: -1
       - displayName: InputSystemUIInputModule
         name: UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: InputSystemUIInputModule
           m_Image: {fileID: 2800000, guid: 3028dc075ba8c584d9bc7d1e0255e038, type: 3}
@@ -5921,7 +5957,7 @@ MonoBehaviour:
         hash: -1
       - displayName: MultiplayerEventSystem
         name: UnityEngine.InputSystem.UI.MultiplayerEventSystem, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: MultiplayerEventSystem
           m_Image: {fileID: 2800000, guid: 6a237171e2346e3458db37eb0f90d42b, type: 3}
@@ -5933,7 +5969,7 @@ MonoBehaviour:
         hash: -1
       - displayName: TrackedDeviceRaycaster
         name: UnityEngine.InputSystem.UI.TrackedDeviceRaycaster, Unity.InputSystem,
-          Version=1.11.1.0, Culture=neutral, PublicKeyToken=null
+          Version=1.11.2.0, Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TrackedDeviceRaycaster
           m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
@@ -5944,7 +5980,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: VirtualMouseInput
-        name: UnityEngine.InputSystem.UI.VirtualMouseInput, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.UI.VirtualMouseInput, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: VirtualMouseInput
@@ -5956,7 +5992,7 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
       - displayName: TrackedPoseDriver
-        name: UnityEngine.InputSystem.XR.TrackedPoseDriver, Unity.InputSystem, Version=1.11.1.0,
+        name: UnityEngine.InputSystem.XR.TrackedPoseDriver, Unity.InputSystem, Version=1.11.2.0,
           Culture=neutral, PublicKeyToken=null
         content:
           m_Text: TrackedPoseDriver
@@ -6263,6 +6299,18 @@ MonoBehaviour:
           m_Image: {fileID: 7136189600330326936, guid: 0000000000000000d000000000000000, type: 0}
           m_Tooltip: Projector
           m_TextWithWhitespace: "Projector\u200B"
+        shown: 0
+        isBuiltIn: 1
+        script: {fileID: 0}
+        hash: -1
+      - displayName: RecorderBindings
+        name: UnityEngine.Recorder.RecorderBindings, Unity.Recorder, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        content:
+          m_Text: RecorderBindings
+          m_Image: {fileID: -8204150473280056172, guid: 0000000000000000d000000000000000, type: 0}
+          m_Tooltip: RecorderBindings
+          m_TextWithWhitespace: "RecorderBindings\u200B"
         shown: 0
         isBuiltIn: 1
         script: {fileID: 0}
@@ -7960,4 +8008,4 @@ MonoBehaviour:
         script: {fileID: 0}
         hash: -1
     unityVersion: 6000.0.24f1
-    unityCount: 316
+    unityCount: 318

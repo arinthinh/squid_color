@@ -85,12 +85,9 @@ public class SquidAttackController : SquidController
 
     public void Attack()
     {
-        if (_colorSelector.IsSwitching) return;
-        if (_stunController.IsStun) return;
-
-        // If is out of current ink
-        if (_data.Inks[_data.CurColor] == 0)
+        if (_colorSelector.IsSwitching || _stunController.IsStun || _data.Inks[_data.CurColor] == 0)
         {
+            AudioManager.PlaySound(ESound.CantAttack);
             return;
         }
 

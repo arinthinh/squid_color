@@ -34,11 +34,11 @@ public class SquidMoveController : SquidController
     {
         base.Init(config, inGameData);
         SetEnableMove(false);
+        _moveTransform.SetPositionX(0);
     }
 
     public override void OnStartPlay()
     {
-        transform.SetPositionX(0);
         SetEnableMove(true);
     }
 

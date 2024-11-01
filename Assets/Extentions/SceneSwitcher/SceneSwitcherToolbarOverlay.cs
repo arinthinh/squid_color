@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Overlays;
 using UnityEngine.UIElements;
@@ -68,4 +69,4 @@ namespace Framework.Editors
         }
     }
 }
-
+#endif  

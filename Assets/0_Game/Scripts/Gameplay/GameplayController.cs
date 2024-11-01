@@ -9,7 +9,7 @@ public class GameplayController : SingletonMono<GameplayController>
 
     private int _currentLevelIndex;
     private EState _currentState;
-    
+
     private async UniTaskVoid Start()
     {
         await UniTask.Yield();
@@ -34,6 +34,7 @@ public class GameplayController : SingletonMono<GameplayController>
                 UIManager.Instance.GetView<LevelSelectUIView>().Hide();
                 break;
             case EState.InGame:
+                _levelController.ExitLevel();
                 _levelController.gameObject.SetActive(false);
                 AudioManager.FadeMusicOut(EMusic.InGameBGMSO, 0.5f);
                 UIManager.Instance.GetView<InGameUIView>().Hide();
@@ -42,7 +43,7 @@ public class GameplayController : SingletonMono<GameplayController>
         await UniTask.WaitForSeconds(0.1f);
     }
 
-    private  async UniTask EnterState(EState state)
+    private async UniTask EnterState(EState state)
     {
         _currentState = state;
         switch (state)
@@ -71,13 +72,19 @@ public class GameplayController : SingletonMono<GameplayController>
 
     public void PlayNextLevel()
     {
-        _currentLevelIndex++;
+        _currentLevelIndex = Mathf.Min(_currentLevelIndex + 1, ConfigManager.Instance.GetConfig<LevelConfigCollectionSO>().Configs.Count);
         ChangeState(EState.InGame).Forget();
     }
 
-    public void ExitLevel()
+    public void ReplayLevel()
+    {
+        PlayLevel(_currentLevelIndex);
+    }
+
+    public void ExitLevel(bool isLeaveWhenNotComplete = false)
     {
         if (_currentState != EState.InGame) return;
+        if (isLeaveWhenNotComplete) _levelController.StopPlay();
         ChangeState(EState.LevelSelect).Forget();
     }
 

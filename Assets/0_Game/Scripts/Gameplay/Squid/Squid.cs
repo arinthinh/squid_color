@@ -19,5 +19,4 @@ public class Squid : MonoBehaviour
     public void OnStartPlay() => _controllers.ForEach(c => c.OnStartPlay());
     
     public void OnStopPlay() => _controllers.ForEach(c => c.OnStopPlay());
-    
 }

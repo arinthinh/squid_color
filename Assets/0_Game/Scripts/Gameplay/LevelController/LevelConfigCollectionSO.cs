@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class LevelConfigCollectionSO : ConfigCollection
@@ -36,6 +37,7 @@ public class LevelConfig
 public class EnemyWaveConfig
 {
     public float Interval = 1f;
+    [TableList]
     public List<EnemyBehaviourConfig> EnemyBehaviours;
 }
 
@@ -48,8 +50,8 @@ public class EnemyBehaviourConfig
     public EColor Color;
     public Vector2 TargetPosition;
     public EDirection MoveInDirection;
-    public EDirection MoveOutDirection;
     public float MoveDuration;
     public float StayInterval;
     public bool IsAttack;
+    public float AttackPercent = 0.5f;
 }

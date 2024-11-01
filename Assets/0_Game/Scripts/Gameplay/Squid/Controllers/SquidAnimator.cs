@@ -81,7 +81,7 @@ public class SquidAnimator : SquidController
 
             case EAnimation.Invisible:
             {
-                _currentSpriteRenderer.DOFade(0.5f, 0.15f).SetLoops(-1, LoopType.Yoyo);
+                _currentSpriteRenderer.DOFade(0.5f, 0.2f).SetLoops(5, LoopType.Yoyo);
                 break;
             }
         }
@@ -100,8 +100,11 @@ public class SquidAnimator : SquidController
         }
 
         _newSpriteRenderer.sprite = newColorSprite;
-        _currentSpriteRenderer.transform.DOLocalMoveY(_moveDownPosY, 0.25f);
-        _newSpriteRenderer.transform.DOLocalMoveY(_basePosY, 0.25f);
+        _currentSpriteRenderer.transform.DOLocalMoveY(_moveDownPosY, _config.SwitchColorTime);
+        _newSpriteRenderer.transform.DOLocalMoveY(_basePosY, _config.SwitchColorTime);
+        _currentSpriteRenderer.DOKill();
+        _currentSpriteRenderer.color = Color.white;
+        _newSpriteRenderer.color = Color.white;
         (_currentSpriteRenderer, _newSpriteRenderer) = (_newSpriteRenderer, _currentSpriteRenderer);
     }
 

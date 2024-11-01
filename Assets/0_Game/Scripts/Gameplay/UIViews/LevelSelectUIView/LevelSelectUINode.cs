@@ -1,18 +1,20 @@
 ﻿using System;
+using JSAM;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
 public class LevelSelectUINode : MonoBehaviour
 {
+    [Header("UI OBJECTS")]
+    [SerializeField] private Button _button;
+    [SerializeField] private TextMeshProUGUI _levelIndexTMP;
+    [SerializeField] private TextMeshProUGUI _completeTMP;
+    
     private int _levelIndex;
-    private Button _button;
     private INodeClickHandler _nodeClickHandler;
 
-    private void Awake()
-    {
-        _button = GetComponent<Button>();
-    }
+    public int LevelIndex => _levelIndex;
 
     private void OnEnable()
     {
@@ -21,16 +23,24 @@ public class LevelSelectUINode : MonoBehaviour
 
     private void OnDisable()
     {
-        _button.onClick.AddListener(OnClick);
+        _button.onClick.RemoveListener(OnClick);
     }
 
-    public void Init(INodeClickHandler nodeClickHandler)
+    public void Init(int levelIndex, INodeClickHandler nodeClickHandler)
     {
+        _levelIndex = levelIndex;
         _nodeClickHandler = nodeClickHandler;
+        _levelIndexTMP.text = levelIndex.ToString();
+    }
+    
+    public void UpdateComplete(bool isComplete)
+    {
+        _completeTMP.gameObject.SetActive(isComplete);
     }
 
     private void OnClick()
     {
+        AudioManager.PlaySound(ESound.ClickSoundSO);
         _nodeClickHandler.OnNodeClicked(_levelIndex);
     }
 }

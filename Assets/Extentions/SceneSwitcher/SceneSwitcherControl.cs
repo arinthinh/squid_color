@@ -1,3 +1,4 @@
+#if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +102,7 @@ namespace Framework.Editors
                     var scenePath = sceneSplits[0];
                     var isLoaded = bool.Parse(sceneSplits[1]);
 
-                    EditorSceneManager.OpenScene(scenePath, i == 0 ? OpenSceneMode.Single : 
+                    EditorSceneManager.OpenScene(scenePath, i == 0 ? OpenSceneMode.Single :
                         isLoaded ? OpenSceneMode.Additive : OpenSceneMode.AdditiveWithoutLoading);
                 }
             }
@@ -160,3 +161,4 @@ namespace Framework.Editors
         }
     }
 }
+#endif

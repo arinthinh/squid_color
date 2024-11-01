@@ -20,6 +20,10 @@ public class StarfishBehaviourController : MonoBehaviour
     [SerializeField] private ColorMixFormulaConfigSO _colorMixFormula;
 
     [Header("COMPONENTS")]
+    [SerializeField] private BoxCollider2D _boxCollider;
+    [SerializeField] private Transform _idleAnimationTransform;
+    [SerializeField] private Transform _attackAnimationTransform;
+    [SerializeField] private Transform _dieAnimationTransform;
     [SerializeField] private SpriteRenderer _avatar;
 
     private IObjectPool<StarfishBehaviourController> _enemyPool;
@@ -42,20 +46,25 @@ public class StarfishBehaviourController : MonoBehaviour
     public void CancelCurrentBehaviour()
     {
         _behaviourCTS.Cancel();
+        _behaviourCTS.Dispose();
         _behaviourCTS = new();
     }
 
     public void OnSpawn(EnemyBehaviourConfig behaviourConfig, StarfishPositionConfig positionConfig)
     {
         // Set default state
+        _boxCollider.enabled = true;
         _isAlive = true;
         _positionConfig = positionConfig;
-        transform.localScale = Vector3.one;
-        transform.localEulerAngles = Vector3.zero;
+        
+        _attackAnimationTransform.localEulerAngles = Vector3.zero;
+        _dieAnimationTransform.localEulerAngles = Vector3.zero;
+        
         _avatar.color = UnityEngine.Color.white;
         ChangeColor(behaviourConfig.Color, EStarfishState.Full);
 
         // Start
+        PlayIdleAnimation();
         PerformBehaviour(behaviourConfig).Forget();
     }
 
@@ -76,15 +85,15 @@ public class StarfishBehaviourController : MonoBehaviour
         if (behaviourConfig.IsAttack) PerformAttack(behaviourConfig.StayInterval).Forget();
         await UniTask.WaitForSeconds(behaviourConfig.StayInterval, cancellationToken: _behaviourCTS.Token);
         await MoveOut();
-        _enemyPool.Release(this);
+        if (gameObject.activeSelf) _enemyPool.Release(this);
+
 
         return;
 
         async UniTask MoveIn()
         {
-            PlayMoveAnimation(behaviourConfig.MoveInDirection, behaviourConfig.MoveDuration);
             await transform.DOMove(targetPosition, behaviourConfig.MoveDuration)
-                .WithCancellation(cancellationToken: _behaviourCTS.Token);
+                .ToUniTask(TweenCancelBehaviour.Kill, _behaviourCTS.Token);
         }
 
         async UniTask PerformAttack(float stayInterval)
@@ -94,7 +103,7 @@ public class StarfishBehaviourController : MonoBehaviour
             // Every second, random attack
             for (var i = 0; i < availableHits; i++)
             {
-                var isAttack = Random.value < 0.4f;
+                var isAttack = Random.value < behaviourConfig.AttackPercent;
                 if (isAttack) Attack();
                 await UniTask.WaitForSeconds(1f, cancellationToken: _behaviourCTS.Token);
             }
@@ -102,20 +111,20 @@ public class StarfishBehaviourController : MonoBehaviour
 
         async UniTask MoveOut()
         {
-            PlayMoveAnimation(behaviourConfig.MoveOutDirection, behaviourConfig.MoveDuration);
-            var moveOutTargetPosition = targetPosition - offset;
-            await transform.DOMove(moveOutTargetPosition, behaviourConfig.MoveDuration)
-                .WithCancellation(cancellationToken: _behaviourCTS.Token);
+            await transform.DOMove(spawnPosition, behaviourConfig.MoveDuration)
+                .ToUniTask(TweenCancelBehaviour.Kill, _behaviourCTS.Token);
         }
     }
 
     private void Attack()
     {
         PlayAttackAnimation();
-        var projectTile = _projectilePool.Get();
-        var startPosition = projectTile.transform.position = transform.position;
+        var projectile = _projectilePool.Get();
+        var starfishProjectile = projectile as StarfishProjectile;
+        var startPosition = projectile.transform.position = transform.position;
         var targetPosition = startPosition + Vector3.down * 25f;
-        projectTile.Fly(targetPosition, 1f);
+        starfishProjectile?.SetColor(Color);
+        projectile.Fly(targetPosition, 1f);
     }
 
     private void ChangeColor(EColor color, EStarfishState state)
@@ -149,9 +158,10 @@ public class StarfishBehaviourController : MonoBehaviour
 
     private async UniTaskVoid OnDie()
     {
+        _boxCollider.enabled = false;
         _isAlive = false;
-        CancelCurrentBehaviour();
         Die?.Invoke(this);
+        CancelCurrentBehaviour();
         await PlayDieAnimation();
         // Back to pool
         if (gameObject.activeSelf) _enemyPool.Release(this);
@@ -160,35 +170,38 @@ public class StarfishBehaviourController : MonoBehaviour
     private async UniTask PlayDieAnimation()
     {
         var animationTime = 0.8f;
-        transform.DOKill();
-        transform.eulerAngles = Vector3.zero;
+        
+        // Stop attack animation
+        _attackAnimationTransform.DOKill();
+        _attackAnimationTransform.eulerAngles = Vector3.zero;
+        
+        // Play die animation
+        _dieAnimationTransform.DOKill();
+        _dieAnimationTransform.eulerAngles = Vector3.zero;
+        _dieAnimationTransform.DORotate(Vector3.back * 60f, animationTime);
+        _dieAnimationTransform.DOMoveY(_dieAnimationTransform.position.y + 5f, animationTime);
+        
+        // Fade
         _avatar.DOFade(0, animationTime);
-        transform.DORotate(Vector3.back * 60f, animationTime);
-        transform.DOMoveY(transform.position.y + 5f, animationTime);
+        
         // Wait animation complete
         await UniTask.WaitForSeconds(animationTime, cancellationToken: _behaviourCTS.Token);
     }
 
     private void PlayAttackAnimation()
     {
-        transform.DOKill();
-        transform.DOPunchScale(Vector3.one * 0.1f, 0.25f)
-            .OnComplete(() => transform.localScale = Vector3.one);
+        _attackAnimationTransform.DOKill();
+        _attackAnimationTransform.DORotate(Vector3.forward * 360f, 0.8f, RotateMode.FastBeyond360)
+            .OnComplete(() => _attackAnimationTransform.eulerAngles = Vector3.zero);
     }
 
-    private void PlayMoveAnimation(EDirection moveDirection, float moveDuration)
+    private void PlayIdleAnimation()
     {
-        transform.DOKill();
-        transform.eulerAngles = Vector3.zero;
-
-        var rotateValue = moveDirection switch
-        {
-            EDirection.Left => 20f,
-            EDirection.Right => -20f,
-            _ => 0f
-        };
-        transform.DORotate(Vector3.forward * rotateValue, moveDuration / 2f)
-            .OnComplete(() => transform.DORotate(Vector3.zero, moveDuration / 2f));
+        _idleAnimationTransform.DOKill();
+        _idleAnimationTransform.localScale = Vector3.one;
+        _idleAnimationTransform.DOScale(new Vector3(0.95f, 0.9f, 1f), 0.5f)
+            .SetEase(Ease.OutQuad)
+            .SetLoops(-1, LoopType.Yoyo);
     }
 }
 

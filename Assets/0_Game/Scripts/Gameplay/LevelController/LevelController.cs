@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class LevelController : MonoBehaviour
 {
-    public static Action WinLevel;
-    public static Action LoseLevel;
-
     [Header("LEVEL DATA")]
     [SerializeField] private LevelData _curLevelData;
 
@@ -42,7 +39,7 @@ public class LevelController : MonoBehaviour
 
         // Init data
         _config = ConfigManager.Instance.GetConfig<LevelConfigCollectionSO>().GetLevelConfig(levelIndex);
-        _curLevelData = new(_config.Targets, _config.LevelTime);
+        _curLevelData = new(levelIndex,_config.Targets, _config.LevelTime);
         _targetPresenter = inGameUIView;
         _timerPresenter = inGameUIView;
         
@@ -72,26 +69,29 @@ public class LevelController : MonoBehaviour
         }
     }
 
-    private void StopPlay()
+    public void StopPlay()
     {
         _timer.Stop();
         _squid.OnStopPlay();
         _starfishsManager.OnStopPlay();
     }
+    
+    public void ExitLevel()
+    {
+        _starfishsManager.OnExit();
+    }
 
     private void OnWinLevel()
     {
         StopPlay();
-        GameDataController.Instance.OnWinLevel();
+        GameDataController.Instance.OnWinLevel(_curLevelData.LevelIndex);
         UIManager.Instance.GetView<WinUIView>().Show();
-        WinLevel?.Invoke();
     }
 
     private void OnLoseLevel()
     {
         StopPlay();
         UIManager.Instance.GetView<LoseUIView>().Show();
-        LoseLevel?.Invoke();
     }
 
     private void OnTimerChanged(int secondLeft)
@@ -108,16 +108,20 @@ public class LevelController : MonoBehaviour
         _targetPresenter.UpdateTargetInfo(targetData.Color, targetData.Target);
         CheckWin();
     }
+
+   
 }
 
 [Serializable]
 public class LevelData
 {
+    public int LevelIndex;
     public int SecondLeft;
     public List<TargetData> Targets = new();
 
-    public LevelData(List<LevelConfig.TargetConfig> targetConfigs, int levelTime)
+    public LevelData(int levelIndex, List<LevelConfig.TargetConfig> targetConfigs, int levelTime)
     {
+        LevelIndex = levelIndex;
         SecondLeft = levelTime;
 
         foreach (var cfg in targetConfigs)

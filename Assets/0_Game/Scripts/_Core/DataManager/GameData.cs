@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class GameData
 {
-    public int CurrentLevel;
+    public int CurrentLevel = 1;
 }
 
 

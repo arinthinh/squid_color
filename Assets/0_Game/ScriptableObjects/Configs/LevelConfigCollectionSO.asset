@@ -13,120 +13,774 @@ MonoBehaviour:
   m_Name: LevelConfigCollectionSO
   m_EditorClassIdentifier: 
   Configs:
-  - Index: 0
+  - Index: 1
     LevelTime: 60
     Targets:
     - Color: 4
       Targets: 15
     EnemyWaves:
-    - Interval: 6
+    - Interval: 7
       EnemyBehaviours:
       - Color: 1
         TargetPosition: {x: 0, y: 0}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 1
+        IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 1, y: 0}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 1
+        IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 2, y: 0}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 1
+        IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 3, y: 0}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 1
+        IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 4, y: 0}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
-        IsAttack: 1
-    - Interval: 6
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
       EnemyBehaviours:
       - Color: 1
         TargetPosition: {x: 0, y: 1}
         MoveInDirection: 1
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 1, y: 1}
         MoveInDirection: 1
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 2, y: 1}
         MoveInDirection: 1
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 3, y: 1}
         MoveInDirection: 1
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 4, y: 1}
         MoveInDirection: 1
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
-    - Interval: 6
+        AttackPercent: 0.5
+    - Interval: 7
       EnemyBehaviours:
       - Color: 1
         TargetPosition: {x: 0, y: 2}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 1, y: 2}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 2, y: 2}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 3, y: 2}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
       - Color: 1
         TargetPosition: {x: 4, y: 2}
         MoveInDirection: 0
-        MoveOutDirection: 0
         MoveDuration: 2
         StayInterval: 5
         IsAttack: 0
+        AttackPercent: 0.5
+  - Index: 2
+    LevelTime: 60
+    Targets:
+    - Color: 5
+      Targets: 15
+    EnemyWaves:
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 2, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 2, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 2, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+  - Index: 3
+    LevelTime: 60
+    Targets:
+    - Color: 6
+      Targets: 15
+    EnemyWaves:
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 2, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 0}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 2, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 2, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 2}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+  - Index: 4
+    LevelTime: 60
+    Targets:
+    - Color: 6
+      Targets: 8
+    - Color: 4
+      Targets: 8
+    - Color: 5
+      Targets: 8
+    EnemyWaves:
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 2
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 1
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 0
+        AttackPercent: 0.5
+  - Index: 5
+    LevelTime: 60
+    Targets:
+    - Color: 6
+      Targets: 8
+    - Color: 4
+      Targets: 8
+    - Color: 5
+      Targets: 8
+    EnemyWaves:
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 1, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 4, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 2
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+    - Interval: 7
+      EnemyBehaviours:
+      - Color: 1
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 5
+        IsAttack: 1
+        AttackPercent: 0.5
+  - Index: 6
+    LevelTime: 60
+    Targets:
+    - Color: 6
+      Targets: 8
+    - Color: 4
+      Targets: 8
+    - Color: 5
+      Targets: 8
+    EnemyWaves:
+    - Interval: 5
+      EnemyBehaviours:
+      - Color: 3
+        TargetPosition: {x: 0, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+    - Interval: 5
+      EnemyBehaviours:
+      - Color: 2
+        TargetPosition: {x: 1, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 1
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+    - Interval: 5
+      EnemyBehaviours:
+      - Color: 1
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 2, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 3
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 0
+        MoveDuration: 2
+        StayInterval: 3
+        IsAttack: 1
+        AttackPercent: 0.5
+  - Index: 7
+    LevelTime: 60
+    Targets:
+    - Color: 4
+      Targets: 10
+    EnemyWaves:
+    - Interval: 6
+      EnemyBehaviours:
+      - Color: 1
+        TargetPosition: {x: 0, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 1, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 2, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 3, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 1
+        TargetPosition: {x: 4, y: 0}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 0, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 2, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 4, y: 1}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 0, y: 2}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 1, y: 2}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 2, y: 2}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 0
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 3, y: 2}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5
+      - Color: 2
+        TargetPosition: {x: 4, y: 2}
+        MoveInDirection: 3
+        MoveDuration: 2
+        StayInterval: 4
+        IsAttack: 1
+        AttackPercent: 0.5

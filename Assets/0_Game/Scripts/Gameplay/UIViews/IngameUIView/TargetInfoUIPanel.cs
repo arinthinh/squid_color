@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TargetInfoUIPanel : MonoBehaviour
 {
-    [SerializeField] private Image _doneImage;
+    [SerializeField] private TextMeshProUGUI _doneTMP;
     [SerializeField] private Image _image;
     [SerializeField] private TextMeshProUGUI _targetCountTMP;
     [SerializeField] private StarfishSpritesConfigSO _starfishSpritesConfig;
@@ -18,7 +18,7 @@ public class TargetInfoUIPanel : MonoBehaviour
         _curColor = color;
         _image.sprite = _starfishSpritesConfig.GetSprite(color, EStarfishState.Die);
         _targetCountTMP.gameObject.SetActive(true);
-        _doneImage.gameObject.SetActive(false);
+        _doneTMP.gameObject.SetActive(false);
     }
 
     public void UpdateTargetCount(int count, bool isPlayAnimation = false)
@@ -32,7 +32,7 @@ public class TargetInfoUIPanel : MonoBehaviour
 
         if (count <= 0)
         {
-            _doneImage.gameObject.SetActive(true);
+            _doneTMP.gameObject.SetActive(true);
             _targetCountTMP.gameObject.SetActive(false);
             return;
         }

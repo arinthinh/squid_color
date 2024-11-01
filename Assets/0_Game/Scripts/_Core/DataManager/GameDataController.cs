@@ -37,9 +37,13 @@ public class GameDataController : SingletonMono<GameDataController>
         PlayerPrefs.SetString(DATA_KEY, dataString);
     }
 
-    public void OnWinLevel()
+    public void OnWinLevel(int levelIndex)
     {
-        _gameData.CurrentLevel++;
+        if (_gameData.CurrentLevel <= levelIndex)
+        {
+            var maxLevel = ConfigManager.Instance.GetConfig<LevelConfigCollectionSO>().Configs.Count;
+            _gameData.CurrentLevel = Mathf.Min(levelIndex + 1, maxLevel + 1);
+        }
         Save();
     }
 }

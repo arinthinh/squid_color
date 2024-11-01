@@ -1,18 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using JSAM;
 using TMPro;
 using Toolkit.UI;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class InGameUIView : UIView, ITargetPresenter, ITimerPresenter
 {
     [SerializeField] private RectTransform _targetPanelsContainer;
     [SerializeField] private TargetInfoUIPanel _targetInfoUIPanelPrefab;
     [SerializeField] private TextMeshProUGUI _timerTMP;
+    [SerializeField] private Button _settingsButton;
 
     private ObjectPool<TargetInfoUIPanel> _targetInfoUIPool;
     private readonly List<TargetInfoUIPanel> _targetInfoUIPanels = new();
+
+    private void OnEnable()
+    {
+        _settingsButton.onClick.AddListener(OnSettingsButtonClick);
+    }
+
+    private void OnDisable()
+    {
+        _settingsButton.onClick.RemoveListener(OnSettingsButtonClick);
+    }
 
     private void Start()
     {
@@ -61,12 +75,18 @@ public class InGameUIView : UIView, ITargetPresenter, ITimerPresenter
     public void ShowTimer(int secondLeft)
     {
         _timerTMP.gameObject.SetActive(true);
-        _timerTMP.text = $"{secondLeft}s";
+        _timerTMP.text = $"{secondLeft}";
     }
 
     public void UpdateTimer(int secondLeft)
     {
-        _timerTMP.text = $"{secondLeft}s";
+        _timerTMP.text = $"{secondLeft}";
+    }
+
+    private void OnSettingsButtonClick()
+    {
+        AudioManager.PlaySound(ESound.ClickSoundSO);
+        UIManager.Instance.GetView<SettingsUIView>().Show(true);
     }
 }
 

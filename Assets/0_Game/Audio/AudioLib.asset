@@ -21,6 +21,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bef8b62512c277b4a9472e896bf4f998, type: 2}
   - {fileID: 11400000, guid: 324a5756bcbeef4499fdef5602eec3d7, type: 2}
   - {fileID: 11400000, guid: 2731d6ed6c81aea48b7baa84a300b710, type: 2}
+  - {fileID: 11400000, guid: c0dfda001eb233e48a618c7059752a98, type: 2}
+  - {fileID: 11400000, guid: f1286a50f06ad284b80377b83a291817, type: 2}
+  - {fileID: 11400000, guid: 7b8ea0efa72764946abeee372c38e099, type: 2}
+  - {fileID: 11400000, guid: 2e89f41ec11a49f49ad477edcab800b7, type: 2}
+  - {fileID: 11400000, guid: 49b9af176e3de5b4d94eb2ec777e6e76, type: 2}
+  - {fileID: 11400000, guid: 95c846532e570a34a84147bba8eee824, type: 2}
   Music:
   - {fileID: 11400000, guid: 791e9ce1772d41a459ed58396673f0c3, type: 2}
   - {fileID: 11400000, guid: 21e19a2e8b4adc34cb6be140ae8d140c, type: 2}
@@ -41,6 +47,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: bef8b62512c277b4a9472e896bf4f998, type: 2}
     - {fileID: 11400000, guid: 324a5756bcbeef4499fdef5602eec3d7, type: 2}
     - {fileID: 11400000, guid: 2731d6ed6c81aea48b7baa84a300b710, type: 2}
+    - {fileID: 11400000, guid: c0dfda001eb233e48a618c7059752a98, type: 2}
+    - {fileID: 11400000, guid: f1286a50f06ad284b80377b83a291817, type: 2}
+    - {fileID: 11400000, guid: 7b8ea0efa72764946abeee372c38e099, type: 2}
+    - {fileID: 11400000, guid: 2e89f41ec11a49f49ad477edcab800b7, type: 2}
+    - {fileID: 11400000, guid: 49b9af176e3de5b4d94eb2ec777e6e76, type: 2}
+    - {fileID: 11400000, guid: 95c846532e570a34a84147bba8eee824, type: 2}
     foldout: 1
   musicCategoriesToList:
   - name: 

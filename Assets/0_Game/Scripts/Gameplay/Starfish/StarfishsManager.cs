@@ -80,18 +80,12 @@ public class StarfishsManager : MonoBehaviour
 
     public void Init()
     {
-        
     }
 
     public void OnStartPlay(List<EnemyWaveConfig> waves)
     {
         _waves = waves;
         StartSpawningLoop().Forget();
-    }
-
-    public void OnStopPlay()
-    {
-        StopAllActions();
     }
 
     private async UniTaskVoid StartSpawningLoop()
@@ -108,10 +102,16 @@ public class StarfishsManager : MonoBehaviour
         }
     }
 
-    public void StopAllActions()
+    public void OnStopPlay()
     {
         _isPerforming = false;
         _monstersBehaviourCTS.Cancel();
+        _monstersBehaviourCTS.Dispose();
+        _monstersBehaviourCTS = new();
+    }
+    
+    public void OnExit()
+    {
         ReleaseAllMonsters();
         ReleaseAllProjectiles();
     }

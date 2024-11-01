@@ -2,7 +2,13 @@
         MoveSoundSO,
         TransitionSoundSO,
         HitSoundSO,
-        AttackSoundSO
+        AttackSoundSO,
+        LoseSoundSO,
+        WinSoundSO,
+        ClickSoundSO,
+        CountSoundSO,
+        StartSoundSO,
+        CantAttack
     }
     public enum EMusic {
         InGameBGMSO,

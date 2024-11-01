@@ -1,5 +1,6 @@
 ﻿using System;
 using DG.Tweening;
+using JSAM;
 using UnityEngine;
 
 public class SquidStunController : SquidController
@@ -34,6 +35,7 @@ public class SquidStunController : SquidController
         if (_isInvisible) return;
         if (_isStun) return;
 
+        AudioManager.PlaySound(ESound.HitSoundSO);
         _isStun = true;
 
         _animator.PlayAnimation(SquidAnimator.EAnimation.Stun);
