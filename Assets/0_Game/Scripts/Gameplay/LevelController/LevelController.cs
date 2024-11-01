@@ -100,7 +100,7 @@ public class LevelController : MonoBehaviour
         _timerPresenter.UpdateTimer(secondLeft);
     }
 
-    private void StarfishsDie(EColor color, Vector3 position)
+    private void StarfishsDie(EColor color)
     {
         var targetData = _curLevelData.GetTarget(color);
         if (targetData is not { Target: > 0 }) return;

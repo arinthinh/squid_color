@@ -10,7 +10,7 @@ public class StarfishsManager : MonoBehaviour
     /// <summary>
     /// (EColor color, Vector3 position)
     /// </summary>
-    public event Action<EColor, Vector3> EnemyDie;
+    public event Action<EColor> EnemyDie;
 
     [SerializeField] private StarfishBehaviourController _starfishBehaviourPrefab;
     [SerializeField] private StarfishProjectile _starfishProjectilePrefab;
@@ -132,7 +132,7 @@ public class StarfishsManager : MonoBehaviour
 
     private void OnEnemyDie(StarfishBehaviourController starfishBehaviour)
     {
-        EnemyDie?.Invoke(starfishBehaviour.Color, starfishBehaviour.transform.position);
+        EnemyDie?.Invoke(starfishBehaviour.Color);
     }
 
     public StarfishProjectile GetProjectile()

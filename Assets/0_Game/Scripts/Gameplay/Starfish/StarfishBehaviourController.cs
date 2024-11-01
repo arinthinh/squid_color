@@ -56,10 +56,11 @@ public class StarfishBehaviourController : MonoBehaviour
         _boxCollider.enabled = true;
         _isAlive = true;
         _positionConfig = positionConfig;
-        
+
         _attackAnimationTransform.localEulerAngles = Vector3.zero;
         _dieAnimationTransform.localEulerAngles = Vector3.zero;
-        
+        _dieAnimationTransform.localPosition = Vector3.zero;
+
         _avatar.color = UnityEngine.Color.white;
         ChangeColor(behaviourConfig.Color, EStarfishState.Full);
 
@@ -81,38 +82,38 @@ public class StarfishBehaviourController : MonoBehaviour
         var spawnPosition = targetPosition + offset;
 
         transform.position = spawnPosition;
-        await MoveIn();
-        if (behaviourConfig.IsAttack) PerformAttack(behaviourConfig.StayInterval).Forget();
+
+        // Move in
+        transform.DOMove(targetPosition, behaviourConfig.MoveDuration);
+        await UniTask.WaitForSeconds(behaviourConfig.MoveDuration, cancellationToken: _behaviourCTS.Token);
+
+        // Idle or attack
+        if (behaviourConfig.IsAttack)
+        {
+            PerformAttack(behaviourConfig.StayInterval, behaviourConfig.AttackPercent).Forget();
+        }
+        
+        // Stay in position
         await UniTask.WaitForSeconds(behaviourConfig.StayInterval, cancellationToken: _behaviourCTS.Token);
-        await MoveOut();
+
+        // Move out
+        transform.DOMove(spawnPosition, behaviourConfig.MoveDuration);
+        await UniTask.WaitForSeconds(behaviourConfig.MoveDuration, cancellationToken: _behaviourCTS.Token);
+
+        // Release to pool
         if (gameObject.activeSelf) _enemyPool.Release(this);
+    }
 
+    private async UniTask PerformAttack(float stayInterval, float attackPercent)
+    {
+        var availableHits = (int)Math.Floor(stayInterval);
 
-        return;
-
-        async UniTask MoveIn()
+        // Every second, random attack
+        for (var i = 0; i < availableHits; i++)
         {
-            await transform.DOMove(targetPosition, behaviourConfig.MoveDuration)
-                .ToUniTask(TweenCancelBehaviour.Kill, _behaviourCTS.Token);
-        }
-
-        async UniTask PerformAttack(float stayInterval)
-        {
-            var availableHits = (int)Math.Floor(stayInterval);
-
-            // Every second, random attack
-            for (var i = 0; i < availableHits; i++)
-            {
-                var isAttack = Random.value < behaviourConfig.AttackPercent;
-                if (isAttack) Attack();
-                await UniTask.WaitForSeconds(1f, cancellationToken: _behaviourCTS.Token);
-            }
-        }
-
-        async UniTask MoveOut()
-        {
-            await transform.DOMove(spawnPosition, behaviourConfig.MoveDuration)
-                .ToUniTask(TweenCancelBehaviour.Kill, _behaviourCTS.Token);
+            var isAttack = Random.value < attackPercent;
+            if (isAttack) Attack();
+            await UniTask.WaitForSeconds(1f, cancellationToken: _behaviourCTS.Token);
         }
     }
 
@@ -170,20 +171,23 @@ public class StarfishBehaviourController : MonoBehaviour
     private async UniTask PlayDieAnimation()
     {
         var animationTime = 0.8f;
-        
+
+        // Stop move animation
+        transform.DOKill();
+
         // Stop attack animation
         _attackAnimationTransform.DOKill();
         _attackAnimationTransform.eulerAngles = Vector3.zero;
-        
+
         // Play die animation
         _dieAnimationTransform.DOKill();
         _dieAnimationTransform.eulerAngles = Vector3.zero;
         _dieAnimationTransform.DORotate(Vector3.back * 60f, animationTime);
-        _dieAnimationTransform.DOMoveY(_dieAnimationTransform.position.y + 5f, animationTime);
-        
+        _dieAnimationTransform.DOLocalMoveY(_dieAnimationTransform.localPosition.y + 5f, animationTime);
+
         // Fade
         _avatar.DOFade(0, animationTime);
-        
+
         // Wait animation complete
         await UniTask.WaitForSeconds(animationTime, cancellationToken: _behaviourCTS.Token);
     }
